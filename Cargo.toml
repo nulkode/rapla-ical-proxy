@@ -1,16 +1,24 @@
 [package]
 name = "rapla-ical-proxy"
 edition = "2024"
+rust-version = "1.85"
 
 [dependencies]
-axum = { version = "0.8", default-features = false, features = ["tokio", "http1", "http2", "query"] }
+axum = { version = "0.8", default-features = false, features = ["tokio", "http1", "http2", "query", "json"] }
+axum-extra = { version = "0.10", features = ["typed-header"] }
+base64 = "0.22"
 chrono = { version = "0.4", default-features = false, features = ["std", "now"] }
 html-escape = "0.2"
 ics = "0.5"
 moka = { version = "0.12", default-features = false, features = ["future"] }
+mime_guess = "2"
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls-webpki-roots", "charset"] }
+rusqlite = { version = "0.37", features = ["bundled"] }
+rust-embed = "8"
 scraper = { version = "0.26", default-features = false }
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 serde_json = { version = "1.0", default-features = false, features = ["preserve_order"] }
 serde_urlencoded = "0.7"
 tokio = { version = "1.52", features = ["rt-multi-thread", "signal", "test-util"] }
+tower-http = { version = "0.6", features = ["fs"] }
+uuid = { version = "1", features = ["v4", "serde"] }

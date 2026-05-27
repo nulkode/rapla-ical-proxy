@@ -11,10 +11,30 @@ automatically receiving the latest schedule.
 > work schedule in one and the same calendar app, **this is what you're looking
 > for**.
 
+## Fork
+
+This fork contains a vibecoded web panel to fork rapla calendars and make modifications on your own. Das 'O' in DHBW steht für... if you know you know.
+
+### Web Panel
+
+| Path | Description |
+|------|-------------|
+| `/web` | Admin panel (Basic Auth required) — add calendars, modify/delete events, manage overlays |
+| `/public/{id}` | Public calendar view — read-only FullCalendar rendering, no auth |
+| `/api/calendars/{id}/forked.ics` | ICS feed for calendar subscription — public, no auth |
+
+### Quick Start
+
+1. Open `https://rapla.nulkode.dev/web` and log in with your credentials
+2. Click **+ Add Calendar** and paste your Rapla URL
+3. Click the calendar name to view it, or click **👁** to open the public view
+4. Click **🔗** to copy the ICS subscription link
+5. Subscribe to the ICS link in your calendar app
+
 ## Guide
 
 Getting started is easy and requires zero setup if you use the official instance
-at [rapla.satoqz.net](https://rapla.satoqz.net).
+at [rapla.nulkode.dev](https://rapla.nulkode.dev).
 
 1. Get your Rapla link ready. This should be a decently long URL of the
    following shape:
@@ -23,13 +43,13 @@ at [rapla.satoqz.net](https://rapla.satoqz.net).
   https://rapla.dhbw.de/rapla/...
   ```
 
-2. Replace the domain name `rapla.dhbw.de` with `rapla.satoqz.net` (Or the
+2. Replace the domain name `rapla.dhbw.de` with `rapla.nulkode.dev` (Or the
    hostname of another instance, see [self-hosting](#self-hosting)!). **Keep all
    other URL components the same!**
 
   ```diff
   - https://rapla.dhbw.de/rapla/rest
-  + https://rapla.satoqz.net/rapla/rest
+  + https://rapla.nulkode.dev/rapla/rest
   ```
 
 3. Create a new calendar subscription in your calendar app. Paste in the
@@ -56,37 +76,18 @@ The proxy is a simple single-binary webserver with no external dependencies.
 You can deploy it on a VPS, serverless, or even on your local system directly in
 front of your calendar software.
 
-### Container Images
-
-Distroless container images are tagged by commit hash and available for both
-`linux/amd64` and `linux/arm64`.
-
-```sh
-# Pull the latest commit:
-docker pull ghcr.io/satoqz/rapla-ical-proxy:latest
-
-# Pull a specific commit by full hash:
-docker pull ghcr.io/satoqz/rapla-ical-proxy:$GIT_HASH
-
-# Or by short hash:
-docker pull ghcr.io/satoqz/rapla-ical-proxy:$SHORT_GIT_HASH
-
-# Run it:
-docker run --rm -d -p 8080:8080 -e RAPLA_CACHE_MAX_SIZE=100 ghcr.io/satoqz/rapla-ical-proxy
-
-# Make sure it works:
-curl -I http://localhost:8080/rapla/calendar/...
-````
-
 ### Environment Variables
-
-The proxy respects the following environment variables:
 
 | Environment            | Default          | Description                                  |
 | ---------------------- | ---------------- | -------------------------------------------- |
 | `RAPLA_ADDRESS`        | `127.0.0.1:8080` | Socket address to listen at                  |
+| `RAPLA_SERVER_URL`     | `http://<address>` | Public-facing URL (used in forked ICS links) |
 | `RAPLA_CACHE_TTL`      | `3600` (1 hour)  | Time-to-live for cached calendars in seconds |
 | `RAPLA_CACHE_MAX_SIZE` | `0`              | Maximum (estimated) cache size in Megabytes  |
+| `RAPLA_DB_PATH`        | `rapla.db`       | Path to the SQLite database file             |
+| `RAPLA_TAG`            | *(none)*         | Prefix for modified events, e.g. `CM` → `[CM] Math` |
+| `RAPLA_WEB_USERNAME`   | *(required)*     | Basic Auth username for the admin panel      |
+| `RAPLA_WEB_PASSWORD`   | *(required)*     | Basic Auth password for the admin panel      |
 
 > [!NOTE]
 > Setting `RAPLA_CACHE_MAX_SIZE` to `0` (the default) effectively disables

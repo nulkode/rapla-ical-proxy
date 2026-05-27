@@ -1,0 +1,1061 @@
+2026-May-27 00:12:00.285140 Docker 29.5.1 with BuildKit and Buildx detected on deployment server (localhost).
+2026-May-27 00:12:00.289741 Starting deployment of nulkode/rapla-ical-proxy:main to localhost.
+2026-May-27 00:12:00.433789 Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.13
+2026-May-27 00:12:00.518178 [DEBUG] [CMD]: docker stop -t 30 fnrwwgm1ousicaqapwyal72u
+2026-May-27 00:12:00.518178 [DEBUG] Error response from daemon: No such container: fnrwwgm1ousicaqapwyal72u
+2026-May-27 00:12:00.630675 [DEBUG] [CMD]: docker run -d --network 'coolify' --name fnrwwgm1ousicaqapwyal72u  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.13
+2026-May-27 00:12:00.630675 [DEBUG] d305b0c1c82d5a7ebd637ee215d94270d574cf4a56152144676a321c5f0c8fc8
+2026-May-27 00:12:02.673565 [DEBUG] [CMD]: docker exec fnrwwgm1ousicaqapwyal72u bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://x-access-token:<REDACTED>@github.com/nulkode/rapla-ical-proxy.git refs/heads/main'
+2026-May-27 00:12:02.673565 [DEBUG] a1bc99f8e42a623e2f1c94723e1de9aaecd6ecc4	refs/heads/main
+2026-May-27 00:12:02.931914 ----------------------------------------
+2026-May-27 00:12:02.936288 Importing nulkode/rapla-ical-proxy:main (commit sha a1bc99f8e42a623e2f1c94723e1de9aaecd6ecc4) to /artifacts/fnrwwgm1ousicaqapwyal72u.
+2026-May-27 00:12:03.061058 [DEBUG] [CMD]: docker exec fnrwwgm1ousicaqapwyal72u bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b '\''main'\'' '\''https://x-access-token:<REDACTED>@github.com/nulkode/rapla-ical-proxy.git'\'' '\''/artifacts/fnrwwgm1ousicaqapwyal72u'\'' && cd '\''/artifacts/fnrwwgm1ousicaqapwyal72u'\'' && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git fetch --depth=1 origin '\''a1bc99f8e42a623e2f1c94723e1de9aaecd6ecc4'\'' && git -c advice.detachedHead=false checkout '\''a1bc99f8e42a623e2f1c94723e1de9aaecd6ecc4'\'' >/dev/null 2>&1 && cd '\''/artifacts/fnrwwgm1ousicaqapwyal72u'\'' && if [ -f .gitmodules ]; then git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd '\''/artifacts/fnrwwgm1ousicaqapwyal72u'\'' && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2026-May-27 00:12:03.061058 [DEBUG] Cloning into '/artifacts/fnrwwgm1ousicaqapwyal72u'...
+2026-May-27 00:12:04.009357 [DEBUG] From https://github.com/nulkode/rapla-ical-proxy
+2026-May-27 00:<REDACTED>@sha256:0104b334637a5f19aa9c983a91b54c89887c0984081f2068983107a6f6c21eeb
+2026-May-27 00:12:06.751966 [DEBUG] #5 resolve docker.io/library/debian:bookworm-slim@sha256:0104b334637a5f19aa9c983a91b54c89887c0984081f2068983107a6f6c21eeb done
+2026-May-27 00:12:06.751966 [DEBUG] #5 DONE 0.0s
+2026-May-27 00:12:06.751966 [DEBUG] 
+2026-May-27 00:12:06.751966 [DEBUG] #6 [runtime 2/3] RUN apt-get update && apt-get install -y --no-install-recommends     ca-certificates     && rm -rf /var/lib/apt/lists/*
+2026-May-27 00:12:06.751966 [DEBUG] #6 CACHED
+2026-May-27 00:12:06.751966 [DEBUG] 
+2026-May-27 00:12:06.751966 [DEBUG] #7 [builder 1/7] FROM docker.io/library/rust:1.85-slim@sha256:9f841bbe9e7d8e37ceb96ed907265a3a0df7f44e3737d0b100e7907a679acb36
+2026-May-27 00:12:06.751966 [DEBUG] #7 resolve docker.io/library/rust:1.85-slim@sha256:9f841bbe9e7d8e37ceb96ed907265a3a0df7f44e3737d0b100e7907a679acb36 0.0s done
+2026-May-27 00:12:06.751966 [DEBUG] #7 CACHED
+2026-May-27 00:12:06.751966 [DEBUG] 
+2026-May-27 00:12:06.751966 [DEBUG] #8 [internal] load build context
+2026-May-27 00:12:06.865500 [DEBUG] #8 transferring context: 187.12kB 0.0s done
+2026-May-27 00:12:06.867388 [DEBUG] #8 DONE 0.0s
+2026-May-27 00:12:06.867388 [DEBUG] 
+2026-May-27 00:12:06.867388 [DEBUG] #9 [builder 2/7] RUN apt-get update && apt-get install -y --no-install-recommends     curl unzip pkg-config libssl-dev ca-certificates     && rm -rf /var/lib/apt/lists/*
+2026-May-27 00:12:06.867388 [DEBUG] #9 0.068 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+2026-May-27 00:<REDACTED>@INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+2026-May-27 00:12:09.691017 [DEBUG] #9 2.801 debconf: falling back to frontend: Teletype
+2026-May-27 00:12:10.735379 [DEBUG] #9 3.994 Updating certificates in /etc/ssl/certs...
+2026-May-27 00:12:11.411379 [DEBUG] #9 4.672 rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.676 2 added, 0 removed; done.
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.688 Setting up pkg-config:amd64 (1.8.1-1) ...
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.690 Setting up libcurl4:amd64 (7.88.1-10+deb12u14) ...
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.692 Setting up curl (7.88.1-10+deb12u14) ...
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.693 Processing triggers for libc-bin (2.36-9+deb12u10) ...
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.704 Processing triggers for ca-certificates (20230311+deb12u1) ...
+2026-May-27 00:12:11.597944 [DEBUG] #9 4.708 Updating certificates in /etc/ssl/certs...
+2026-May-27 00:12:11.878385 [DEBUG] #9 5.139 0 added, 0 removed; done.
+2026-May-27 00:12:11.878385 [DEBUG] #9 5.139 Running hooks in /etc/ca-certificates/update.d...
+2026-May-27 00:12:12.075901 [DEBUG] #9 5.140 done.
+2026-May-27 00:12:12.075901 [DEBUG] #9 DONE 5.2s
+2026-May-27 00:12:12.075901 [DEBUG] 
+2026-May-27 00:12:12.075901 [DEBUG] #10 [builder 3/7] RUN curl -fsSL https://bun.sh/install | bash
+2026-May-27 00:<REDACTED>@5.9.3
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + vite@6.4.2
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + @fullcalendar/core@6.1.20
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + @fullcalendar/daygrid@6.1.20
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + @fullcalendar/interaction@6.1.20
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + @fullcalendar/timegrid@6.1.20
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + ical.js@2.2.1
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 + path@0.12.7
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331
+2026-May-27 00:12:13.283414 [DEBUG] #13 0.331 25 packages installed [283.00ms]
+2026-May-27 00:12:13.443466 [DEBUG] #13 0.340 $ vite build
+2026-May-27 00:12:13.519844 [DEBUG] #13 0.567 vite v6.4.2 building for production...
+2026-May-27 00:12:13.751686 [DEBUG] #13 0.648 transforming...
+2026-May-27 00:12:14.327499 [DEBUG] #13 1.375 ✓ 20 modules transformed.
+2026-May-27 00:12:14.569680 [DEBUG] #13 1.467 rendering chunks...
+2026-May-27 00:12:14.617503 [DEBUG] #13 1.665 computing gzip size...
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/public.html                   0.58 kB │ gzip:  0.34 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/index.html                    1.18 kB │ gzip:  0.50 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/assets/public-bFoiVYm2.css    0.28 kB │ gzip:  0.22 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/assets/main-8fHRMc0s.css      2.09 kB │ gzip:  0.77 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/assets/public-DT_lmkcK.js     1.22 kB │ gzip:  0.67 kB │ map:     3.51 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/assets/main-UJuXtsND.js       5.99 kB │ gzip:  2.25 kB │ map:    18.81 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 dist/assets/index-DdSoYi_T.js    337.76 kB │ gzip: 99.79 kB │ map: 1,350.82 kB
+2026-May-27 00:12:14.805512 [DEBUG] #13 1.679 ✓ built in 1.07s
+2026-May-27 00:12:14.805512 [DEBUG] #13 DONE 1.7s
+2026-May-27 00:12:14.805512 [DEBUG] 
+2026-May-27 00:12:14.805512 [DEBUG] #14 [builder 7/7] RUN cargo build --release
+2026-May-27 00:12:14.805512 [DEBUG] #14 0.128     Updating crates.io index
+2026-May-27 00:12:21.336565 [DEBUG] #14 6.660  Downloading crates ...
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.680   Downloaded autocfg v1.5.0
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.689   Downloaded dtoa-short v0.3.5
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.692   Downloaded pin-utils v0.1.0
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.694   Downloaded yoke v0.8.1
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.698   Downloaded rustversion v1.0.22
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.704   Downloaded zerovec-derive v0.11.2
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.707   Downloaded percent-encoding v2.3.2
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.710   Downloaded zerotrie v0.2.3
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.715   Downloaded tendril v0.5.0
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.718   Downloaded yoke-derive v0.8.1
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.720   Downloaded zerofrom-derive v0.1.6
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.722   Downloaded zerocopy v0.8.40
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.735   Downloaded typenum v1.20.0
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.740   Downloaded tokio-util v0.7.18
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.750   Downloaded utf-8 v0.7.6
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.752   Downloaded thiserror-impl v2.0.18
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.754   Downloaded try-lock v0.2.5
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.756   Downloaded url v2.5.8
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.759   Downloaded tower v0.5.3
+2026-May-27 00:12:21.449401 [DEBUG] #14 6.773   Downloaded serde_json v1.0.149
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.782   Downloaded serde v1.0.228
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.786   Downloaded tower-layer v0.3.3
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.788   Downloaded sha2 v0.10.9
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.791   Downloaded moka v0.12.15
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.802   Downloaded rustls v0.23.37
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.818   Downloaded slab v0.4.12
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.820   Downloaded webpki-roots v1.0.6
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.824   Downloaded vcpkg v0.2.15
+2026-May-27 00:12:21.573476 [DEBUG] #14 6.896   Downloaded syn v2.0.117
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.910   Downloaded futures-util v0.3.32
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.928   Downloaded synstructure v0.13.2
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.929   Downloaded tracing v0.1.44
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.951   Downloaded serde_derive v1.0.228
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.955   Downloaded iri-string v0.7.10
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.965   Downloaded want v0.3.1
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.966   Downloaded uuid v1.21.0
+2026-May-27 00:12:21.699427 [DEBUG] #14 6.970   Downloaded libc v0.2.186
+2026-May-27 00:12:21.699427 [DEBUG] #14 7.022   Downloaded unicode-ident v1.0.24
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.026   Downloaded tokio-rustls v0.26.4
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.029   Downloaded string_cache v0.9.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.031   Downloaded shlex v1.3.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.032   Downloaded servo_arc v0.4.3
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.033   Downloaded rustls-pki-types v1.14.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.037   Downloaded idna v1.1.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.041   Downloaded hashbrown v0.16.1
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.048   Downloaded utf8_iter v1.0.4
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.049   Downloaded tracing-core v0.1.36
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.053   Downloaded tokio-macros v2.7.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.054   Downloaded rustc_version v0.4.1
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.056   Downloaded rust-embed-impl v8.11.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.057   Downloaded rusqlite v0.37.0
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.065   Downloaded quinn-proto v0.11.13
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.074   Downloaded portable-atomic v1.13.1
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.083   Downloaded tokio v1.52.1
+2026-May-27 00:12:21.816843 [DEBUG] #14 7.140   Downloaded zerovec v0.11.5
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.147   Downloaded icu_properties_data v2.1.2
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.159   Downloaded hyper-util v0.1.20
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.168   Downloaded h2 v0.4.13
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.176   Downloaded walkdir v2.5.0
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.178   Downloaded tower-http v0.6.8
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.189   Downloaded encoding_rs v0.8.35
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.212   Downloaded tinyvec v1.10.0
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.215   Downloaded stable_deref_trait v1.2.1
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.216   Downloaded semver v1.0.27
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.219   Downloaded rustls-webpki v0.103.9
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.223   Downloaded rust-embed v8.11.0
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.233   Downloaded potential_utf v0.1.4
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.234   Downloaded hyper v1.8.1
+2026-May-27 00:12:21.919327 [DEBUG] #14 7.242   Downloaded http v1.4.0
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.247   Downloaded base64 v0.22.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.252   Downloaded subtle v2.6.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.253   Downloaded socket2 v0.6.3
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.256   Downloaded smallvec v1.15.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.258   Downloaded serde_core v1.0.228
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.262   Downloaded ryu v1.0.23
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.266   Downloaded rand_core v0.9.5
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.267   Downloaded pkg-config v0.3.33
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.269   Downloaded mio v1.2.0
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.277   Downloaded memchr v2.8.0
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.284   Downloaded indexmap v2.13.0
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.289   Downloaded icu_normalizer_data v2.1.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.292   Downloaded icu_collections v2.1.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.300   Downloaded headers v0.4.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.308   Downloaded hashbrown v0.15.5
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.314   Downloaded writeable v0.6.2
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.317   Downloaded web_atoms v0.2.3
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.318   Downloaded utf8-width v0.1.8
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.319   Downloaded sync_wrapper v1.0.2
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.320   Downloaded rustc-hash v2.1.1
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.322   Downloaded rand_chacha v0.9.0
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.323   Downloaded quinn-udp v0.5.14
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.326   Downloaded log v0.4.29
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.329   Downloaded ring v0.17.14
+2026-May-27 00:12:22.060191 [DEBUG] #14 7.383   Downloaded icu_properties v2.1.2
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.386   Downloaded icu_locale_core v2.1.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.395   Downloaded hyper-rustls v0.27.7
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.398   Downloaded httparse v1.10.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.401   Downloaded html5ever v0.39.0
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.406   Downloaded getrandom v0.4.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.411   Downloaded zmij v1.0.21
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.414   Downloaded zerofrom v0.1.6
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.415   Downloaded version_check v0.9.5
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.416   Downloaded untrusted v0.9.0
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.418   Downloaded unicase v2.9.0
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.420   Downloaded tower-service v0.3.3
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.421   Downloaded tinyvec_macros v0.1.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.422   Downloaded tinystr v0.8.2
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.425   Downloaded string_cache_codegen v0.6.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.426   Downloaded siphasher v1.0.2
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.428   Downloaded sha1 v0.10.6
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.430   Downloaded serde_urlencoded v0.7.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.432   Downloaded scraper v0.26.0
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.435   Downloaded same-file v1.0.6
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.437   Downloaded rand v0.9.2
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.444   Downloaded quinn v0.11.9
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.449   Downloaded proc-macro2 v1.0.106
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.454   Downloaded ppv-lite86 v0.2.21
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.456   Downloaded parking_lot v0.12.5
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.459   Downloaded num-traits v0.2.19
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.463   Downloaded litemap v0.8.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.466   Downloaded icu_provider v2.1.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.469   Downloaded icu_normalizer v2.1.1
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.473   Downloaded crossbeam-channel v0.5.15
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.479   Downloaded zeroize v1.8.2
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.480   Downloaded tagptr v0.2.0
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.482   Downloaded signal-hook-registry v1.4.8
+2026-May-27 00:12:22.160381 [DEBUG] #14 7.483   Downloaded serde_path_to_error v0.1.20
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.485   Downloaded selectors v0.36.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.489   Downloaded scopeguard v1.2.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.490   Downloaded rust-embed-utils v8.11.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.492   Downloaded reqwest v0.12.28
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.498   Downloaded quote v1.0.44
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.502   Downloaded precomputed-hash v0.1.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.502   Downloaded phf_macros v0.13.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.504   Downloaded phf_generator v0.13.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.505   Downloaded phf v0.13.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.506   Downloaded once_cell v1.21.3
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.510   Downloaded mime_guess v2.0.5
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.512   Downloaded mime v0.3.17
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.513   Downloaded matchit v0.8.4
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.516   Downloaded markup5ever v0.39.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.518   Downloaded ipnet v2.11.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.520   Downloaded http-body-util v0.1.3
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.522   Downloaded html-escape v0.2.13
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.525   Downloaded hashlink v0.10.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.527   Downloaded getrandom v0.2.17
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.530   Downloaded foldhash v0.1.5
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.532   Downloaded fastrand v2.3.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.533   Downloaded fallible-streaming-iterator v0.1.9
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.535   Downloaded fallible-iterator v0.3.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.536   Downloaded event-listener v5.4.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.539   Downloaded ego-tree v0.11.0
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.541   Downloaded displaydoc v0.2.5
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.545   Downloaded pin-project-lite v0.2.17
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.553   Downloaded parking v2.2.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.554   Downloaded new_debug_unreachable v1.0.6
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.555   Downloaded lru-slab v0.1.2
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.556   Downloaded lock_api v0.4.14
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.558   Downloaded http-body v1.0.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.560   Downloaded thiserror v2.0.18
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.568   Downloaded phf_codegen v0.13.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.569   Downloaded parking_lot_core v0.9.12
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.571   Downloaded itoa v1.0.17
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.573   Downloaded idna_adapter v1.2.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.575   Downloaded getrandom v0.3.4
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.579   Downloaded generic-array v0.14.7
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.583   Downloaded derive_more-impl v2.1.1
+2026-May-27 00:12:22.267455 [DEBUG] #14 7.590   Downloaded crossbeam-utils v0.8.21
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.594   Downloaded phf_shared v0.13.1
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.596   Downloaded httpdate v1.0.3
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.597   Downloaded http-range-header v0.4.2
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.598   Downloaded headers-core v0.3.0
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.599   Downloaded libsqlite3-sys v0.35.0
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.681   Downloaded futures-task v0.3.32
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.683   Downloaded ics v0.5.8
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.684   Downloaded futures-sink v0.3.32
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.685   Downloaded futures-macro v0.3.32
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.686   Downloaded futures-core v0.3.32
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.688   Downloaded futures-channel v0.3.32
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.690   Downloaded form_urlencoded v1.2.2
+2026-May-27 00:12:22.368193 [DEBUG] #14 7.691   Downloaded fnv v1.0.7
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.692   Downloaded find-msvc-tools v0.1.9
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.694   Downloaded event-listener-strategy v0.5.4
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.695   Downloaded errno v0.3.14
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.697   Downloaded equivalent v1.0.2
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.698   Downloaded dtoa v1.0.11
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.700   Downloaded digest v0.10.7
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.702   Downloaded derive_more v2.1.1
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.719   Downloaded cssparser-macros v0.6.1
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.720   Downloaded cssparser v0.36.0
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.722   Downloaded crypto-common v0.1.7
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.724   Downloaded crossbeam-epoch v0.9.18
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.726   Downloaded cpufeatures v0.2.17
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.728   Downloaded concurrent-queue v2.5.0
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.730   Downloaded chrono v0.4.44
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.739   Downloaded cfg_aliases v0.2.1
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.740   Downloaded cfg-if v1.0.4
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.741   Downloaded bytes v1.11.1
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.747   Downloaded block-buffer v0.10.4
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.748   Downloaded axum-extra v0.10.3
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.753   Downloaded axum-core v0.5.6
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.755   Downloaded axum v0.8.9
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.766   Downloaded atomic-waker v1.1.2
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.767   Downloaded async-lock v3.4.2
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.770   Downloaded cc v1.2.56
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.773   Downloaded bitflags v2.11.0
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.828    Compiling proc-macro2 v1.0.106
+2026-May-27 00:12:22.505513 [DEBUG] #14 7.828    Compiling unicode-ident v1.0.24
+2026-May-27 00:12:22.617348 [DEBUG] #14 7.829    Compiling quote v1.0.44
+2026-May-27 00:12:22.617348 [DEBUG] #14 7.829    Compiling libc v0.2.186
+2026-May-27 00:12:22.617348 [DEBUG] #14 7.905    Compiling cfg-if v1.0.4
+2026-May-27 00:12:22.617348 [DEBUG] #14 7.940    Compiling
+2026-May-27 00:12:22.767849 [DEBUG] smallvec v1.15.1
+2026-May-27 00:12:22.793955 [DEBUG] #14 8.117    Compiling
+2026-May-27 00:12:22.968623 [DEBUG] version_check v0.9.5
+2026-May-27 00:12:22.968623 [DEBUG] #14 8.141    Compiling itoa v1.0.17
+2026-May-27 00:12:22.996800 [DEBUG] #14 8.317    Compiling pin-project-lite v0.2.17
+2026-May-27 00:12:23.177041 [DEBUG] #14 8.380    Compiling generic-array v0.14.7
+2026-May-27 00:12:23.177041 [DEBUG] #14 8.395    Compiling bytes v1.11.1
+2026-May-27 00:12:23.177041 [DEBUG] #14 8.500    Compiling stable_deref_trait v1.2.1
+2026-May-27 00:12:23.360346 [DEBUG] #14 8.533    Compiling siphasher v1.0.2
+2026-May-27 00:12:23.400271 [DEBUG] #14 8.723    Compiling syn v2.0.117
+2026-May-27 00:12:23.521454 [DEBUG] #14 8.772    Compiling futures-core v0.3.32
+2026-May-27 00:12:23.521454 [DEBUG] #14 8.843    Compiling phf_shared v0.13.1
+2026-May-27 00:12:23.649706 [DEBUG] #14 8.891    Compiling fastrand v2.3.0
+2026-May-27 00:12:23.649706 [DEBUG] #14 8.972    Compiling phf_generator v0.13.1
+2026-May-27 00:12:23.768309 [DEBUG] #14 8.982    Compiling find-msvc-tools v0.1.9
+2026-May-27 00:12:23.768309 [DEBUG] #14 9.065    Compiling shlex v1.3.0
+2026-May-27 00:12:23.768309 [DEBUG] #14 9.091    Compiling errno v0.3.14
+2026-May-27 00:12:23.989537 [DEBUG] #14 9.099    Compiling http v1.4.0
+2026-May-27 00:12:23.989537 [DEBUG] #14 9.145    Compiling cc v1.2.56
+2026-May-27 00:12:23.989537 [DEBUG] #14 9.166    Compiling once_cell v1.21.3
+2026-May-27 00:12:23.989537 [DEBUG] #14 9.312    Compiling
+2026-May-27 00:12:24.143607 [DEBUG] signal-hook-registry v1.4.8
+2026-May-27 00:12:24.390440 [DEBUG] #14 9.713    Compiling
+2026-May-27 00:12:24.542383 [DEBUG] mio v1.2.0
+2026-May-27 00:12:24.744702 [DEBUG] #14 10.07    Compiling socket2 v0.6.3
+2026-May-27 00:12:24.892649 [DEBUG] #14 10.22    Compiling
+2026-May-27 00:12:25.015857 [DEBUG] slab v0.4.12
+2026-May-27 00:12:25.015857 [DEBUG] #14 10.34    Compiling
+2026-May-27 00:12:25.168397 [DEBUG] serde_core v1.0.228
+2026-May-27 00:12:25.206669 [DEBUG] #14 10.53    Compiling tracing-core v0.1.36
+2026-May-27 00:12:25.419849 [DEBUG] #14 10.56    Compiling equivalent v1.0.2
+2026-May-27 00:12:25.419849 [DEBUG] #14 10.59    Compiling typenum v1.20.0
+2026-May-27 00:12:25.849419 [DEBUG] #14 11.17    Compiling synstructure v0.13.2
+2026-May-27 00:12:26.096118 [DEBUG] #14 11.42    Compiling tracing v0.1.44
+2026-May-27 00:12:26.217264 [DEBUG] #14 11.54    Compiling http-body v1.0.1
+2026-May-27 00:12:26.339789 [DEBUG] #14 11.62    Compiling phf_codegen v0.13.1
+2026-May-27 00:12:26.339789 [DEBUG] #14 11.66    Compiling hashbrown v0.16.1
+2026-May-27 00:12:26.448021 [DEBUG] #14 11.68    Compiling futures-task v0.3.32
+2026-May-27 00:12:26.448021 [DEBUG] #14 11.77    Compiling
+2026-May-27 00:12:26.613319 [DEBUG] futures-sink v0.3.32
+2026-May-27 00:12:26.613319 [DEBUG] #14 11.82    Compiling parking_lot_core v0.9.12
+2026-May-27 00:12:26.613319 [DEBUG] #14 11.94    Compiling percent-encoding v2.3.2
+2026-May-27 00:12:26.781069 [DEBUG] #14 12.10    Compiling crossbeam-utils v0.8.21
+2026-May-27 00:12:26.966623 [DEBUG] #14 12.15    Compiling zerofrom-derive v0.1.6
+2026-May-27 00:12:26.969963 [DEBUG] #14 12.16    Compiling yoke-derive v0.8.1
+2026-May-27 00:12:26.975177 [DEBUG] #14 12.29    Compiling zerovec-derive v0.11.2
+2026-May-27 00:12:27.134634 [DEBUG] #14 12.30    Compiling tokio-macros v2.7.0
+2026-May-27 00:12:27.137883 [DEBUG] 
+2026-May-27 00:12:27.519956 [DEBUG] #14 12.84    Compiling tokio v1.52.1
+2026-May-27 00:12:27.746069 [DEBUG] #14 12.93    Compiling displaydoc v0.2.5
+2026-May-27 00:12:27.746069 [DEBUG] #14 13.07    Compiling zerofrom v0.1.6
+2026-May-27 00:12:27.859123 [DEBUG] #14 13.13    Compiling yoke v0.8.1
+2026-May-27 00:12:27.859123 [DEBUG] #14 13.18    Compiling futures-macro v0.3.32
+2026-May-27 00:12:28.067938 [DEBUG] #14 13.24    Compiling zerovec v0.11.5
+2026-May-27 00:12:28.396204 [DEBUG] #14 13.72    Compiling
+2026-May-27 00:12:28.504179 [DEBUG] tinystr v0.8.2
+2026-May-27 00:12:28.504179 [DEBUG] #14 13.81    Compiling indexmap v2.13.0
+2026-May-27 00:12:28.504179 [DEBUG] #14 13.83    Compiling futures-util v0.3.32
+2026-May-27 00:12:28.701205 [DEBUG] #14 13.87    Compiling ring v0.17.14
+2026-May-27 00:12:28.949406 [DEBUG] #14 14.27    Compiling tower-service v0.3.3
+2026-May-27 00:12:29.049916 [DEBUG] #14 14.30    Compiling scopeguard v1.2.0
+2026-May-27 00:12:29.049916 [DEBUG] #14 14.37    Compiling litemap v0.8.1
+2026-May-27 00:12:29.198696 [DEBUG] #14 14.44    Compiling httparse v1.10.1
+2026-May-27 00:12:29.198696 [DEBUG] #14 14.52    Compiling httpdate v1.0.3
+2026-May-27 00:12:29.343684 [DEBUG] #14 14.67    Compiling writeable v0.6.2
+2026-May-27 00:12:29.550325 [DEBUG] #14 14.87    Compiling icu_locale_core v2.1.1
+2026-May-27 00:12:30.116048 [DEBUG] #14 15.44    Compiling lock_api v0.4.14
+2026-May-27 00:12:31.109491 [DEBUG] #14 16.43    Compiling
+2026-May-27 00:12:31.359717 [DEBUG] potential_utf v0.1.4
+2026-May-27 00:12:31.359717 [DEBUG] #14 16.53    Compiling tokio-util v0.7.18
+2026-May-27 00:12:31.363173 [DEBUG] #14 16.68    Compiling
+2026-May-27 00:12:31.513625 [DEBUG] zerotrie v0.2.3
+2026-May-27 00:12:31.624275 [DEBUG] #14 16.95    Compiling
+2026-May-27 00:12:31.775400 [DEBUG] phf_macros v0.13.1
+2026-May-27 00:12:32.018026 [DEBUG] #14 17.34    Compiling
+2026-May-27 00:12:32.135434 [DEBUG] block-buffer v0.10.4
+2026-May-27 00:12:32.135434 [DEBUG] #14 17.45    Compiling crypto-common v0.1.7
+2026-May-27 00:12:32.243208 [DEBUG] #14 17.52    Compiling zeroize v1.8.2
+2026-May-27 00:12:32.243208 [DEBUG] #14 17.57    Compiling
+2026-May-27 00:12:32.348512 [DEBUG] icu_normalizer_data v2.1.1
+2026-May-27 00:12:32.351521 [DEBUG] #14 17.60    Compiling icu_properties_data v2.1.2
+2026-May-27 00:12:32.351521 [DEBUG] #14 17.67    Compiling atomic-waker v1.1.2
+2026-May-27 00:12:32.536152 [DEBUG] #14 17.71    Compiling fnv v1.0.7
+2026-May-27 00:12:32.536152 [DEBUG] #14 17.72    Compiling new_debug_unreachable v1.0.6
+2026-May-27 00:12:32.536152 [DEBUG] #14 17.76    Compiling try-lock v0.2.5
+2026-May-27 00:12:32.536152 [DEBUG] #14 17.76    Compiling mime v0.3.17
+2026-May-27 00:12:32.536152 [DEBUG] #14 17.86    Compiling want v0.3.1
+2026-May-27 00:12:32.758301 [DEBUG] #14 17.94    Compiling h2 v0.4.13
+2026-May-27 00:12:32.758301 [DEBUG] #14 18.08    Compiling rustls-pki-types v1.14.0
+2026-May-27 00:12:33.405083 [DEBUG] #14 18.73    Compiling phf v0.13.1
+2026-May-27 00:12:33.642352 [DEBUG] #14 18.82    Compiling digest v0.10.7
+2026-May-27 00:12:33.642352 [DEBUG] #14 18.97    Compiling icu_provider v2.1.1
+2026-May-27 00:12:33.887564 [DEBUG] #14 19.21    Compiling icu_collections v2.1.1
+2026-May-27 00:12:34.451002 [DEBUG] #14 19.77    Compiling
+2026-May-27 00:12:34.604030 [DEBUG] parking_lot v0.12.5
+2026-May-27 00:12:35.190650 [DEBUG] #14 20.51    Compiling string_cache_codegen v0.6.1
+2026-May-27 00:12:35.335577 [DEBUG] #14 20.66    Compiling getrandom v0.2.17
+2026-May-27 00:12:35.438234 [DEBUG] #14 20.76    Compiling sync_wrapper v1.0.2
+2026-May-27 00:12:35.564127 [DEBUG] #14 20.77    Compiling futures-channel v0.3.32
+2026-May-27 00:12:35.564127 [DEBUG] #14 20.80    Compiling untrusted v0.9.0
+2026-May-27 00:12:35.564127 [DEBUG] #14 20.86    Compiling pin-utils v0.1.0
+2026-May-27 00:12:35.564127 [DEBUG] #14 20.89    Compiling serde v1.0.228
+2026-May-27 00:12:35.710542 [DEBUG] #14 20.92    Compiling base64 v0.22.1
+2026-May-27 00:12:35.710542 [DEBUG] #14 21.03    Compiling tower-layer v0.3.3
+2026-May-27 00:12:35.834529 [DEBUG] #14 21.15    Compiling precomputed-hash v0.1.1
+2026-May-27 00:12:36.056591 [DEBUG] #14 21.19    Compiling cpufeatures v0.2.17
+2026-May-27 00:12:36.056591 [DEBUG] #14 21.23    Compiling hyper v1.8.1
+2026-May-27 00:12:36.504528 [DEBUG] #14 21.83    Compiling
+2026-May-27 00:12:36.655475 [DEBUG] web_atoms v0.2.3
+2026-May-27 00:12:37.212296 [DEBUG] #14 22.54    Compiling serde_derive v1.0.228
+2026-May-27 00:12:37.562422 [DEBUG] #14 22.89    Compiling form_urlencoded v1.2.2
+2026-May-27 00:12:37.699670 [DEBUG] #14 23.02    Compiling http-body-util v0.1.3
+2026-May-27 00:12:37.873175 [DEBUG] #14 23.20    Compiling rustls v0.23.37
+2026-May-27 00:12:37.991452 [DEBUG] #14 23.31    Compiling bitflags v2.11.0
+2026-May-27 00:12:37.996457 [DEBUG] 
+2026-May-27 00:12:38.202630 [DEBUG] #14 23.52    Compiling log v0.4.29
+2026-May-27 00:12:38.340600 [DEBUG] #14 23.66    Compiling zmij v1.0.21
+2026-May-27 00:12:38.469949 [DEBUG] #14 23.79    Compiling
+2026-May-27 00:12:38.715320 [DEBUG] unicase v2.9.0
+2026-May-27 00:12:38.715320 [DEBUG] #14 23.89    Compiling ipnet v2.11.0
+2026-May-27 00:12:39.203519 [DEBUG] #14 24.53    Compiling
+2026-May-27 00:12:39.355356 [DEBUG] hyper-util v0.1.20
+2026-May-27 00:12:39.385132 [DEBUG] #14 24.71    Compiling mime_guess v2.0.5
+2026-May-27 00:12:39.647556 [DEBUG] #14 24.97    Compiling icu_properties v2.1.2
+2026-May-27 00:12:39.837879 [DEBUG] #14 25.03    Compiling icu_normalizer v2.1.1
+2026-May-27 00:12:39.837879 [DEBUG] #14 25.16    Compiling rustls-webpki v0.103.9
+2026-May-27 00:12:40.940670 [DEBUG] #14 26.26    Compiling string_cache v0.9.0
+2026-May-27 00:12:41.114186 [DEBUG] #14 26.28    Compiling tower v0.5.3
+2026-May-27 00:12:41.150732 [DEBUG] #14 26.47    Compiling
+2026-May-27 00:12:41.276248 [DEBUG] concurrent-queue v2.5.0
+2026-May-27 00:12:41.280214 [DEBUG] #14 26.60    Compiling
+2026-May-27 00:12:41.405723 [DEBUG] pkg-config v0.3.33
+2026-May-27 00:12:41.405723 [DEBUG] #14 26.73    Compiling serde_json v1.0.149
+2026-May-27 00:12:41.509068 [DEBUG] #14 26.78    Compiling same-file v1.0.6
+2026-May-27 00:12:41.513062 [DEBUG] #14 26.82    Compiling ryu v1.0.23
+2026-May-27 00:12:41.513062 [DEBUG] #14 26.83    Compiling vcpkg v0.2.15
+2026-May-27 00:12:41.676932 [DEBUG] #14 26.92    Compiling dtoa v1.0.11
+2026-May-27 00:12:41.676932 [DEBUG] #14 27.00    Compiling
+2026-May-27 00:12:41.828719 [DEBUG] subtle v2.6.1
+2026-May-27 00:12:41.828719 [DEBUG] #14 27.02    Compiling parking v2.2.1
+2026-May-27 00:12:41.828719 [DEBUG] #14 27.08    Compiling autocfg v1.5.0
+2026-May-27 00:12:41.828719 [DEBUG] #14 27.15    Compiling
+2026-May-27 00:12:41.963282 [DEBUG] getrandom v0.4.1
+2026-May-27 00:12:41.963282 [DEBUG] #14 27.25    Compiling utf-8 v0.7.6
+2026-May-27 00:12:41.963282 [DEBUG] #14 27.29    Compiling libsqlite3-sys v0.35.0
+2026-May-27 00:12:42.098653 [DEBUG] #14 27.31    Compiling num-traits v0.2.19
+2026-May-27 00:12:42.098653 [DEBUG] #14 27.34    Compiling tendril v0.5.0
+2026-May-27 00:12:42.098653 [DEBUG] #14 27.36    Compiling sha2 v0.10.9
+2026-May-27 00:12:42.098653 [DEBUG] #14 27.42    Compiling
+2026-May-27 00:12:42.249241 [DEBUG] event-listener v5.4.1
+2026-May-27 00:12:42.252736 [DEBUG] #14 27.57    Compiling dtoa-short v0.3.5
+2026-May-27 00:12:42.392661 [DEBUG] #14 27.58    Compiling serde_urlencoded v0.7.1
+2026-May-27 00:12:42.401472 [DEBUG] #14 27.60    Compiling walkdir v2.5.0
+2026-May-27 00:12:42.401472 [DEBUG] #14 27.72    Compiling
+2026-May-27 00:12:42.618981 [DEBUG] idna_adapter v1.2.1
+2026-May-27 00:12:42.624178 [DEBUG] #14 27.79    Compiling cssparser-macros v0.6.1
+2026-May-27 00:12:42.662991 [DEBUG] #14 27.99    Compiling
+2026-May-27 00:12:42.814212 [DEBUG] derive_more-impl v2.1.1
+2026-May-27 00:12:42.839397 [DEBUG] #14 28.16    Compiling selectors v0.36.1
+2026-May-27 00:12:43.005180 [DEBUG] #14 28.33    Compiling
+2026-May-27 00:12:43.122164 [DEBUG] portable-atomic v1.13.1
+2026-May-27 00:12:43.122164 [DEBUG] #14 28.45    Compiling utf8_iter v1.0.4
+2026-May-27 00:12:43.365604 [DEBUG] #14 28.54    Compiling memchr v2.8.0
+2026-May-27 00:12:43.387671 [DEBUG] #14 28.71    Compiling
+2026-May-27 00:12:43.514932 [DEBUG] rustversion v1.0.22
+2026-May-27 00:12:43.519446 [DEBUG] #14 28.84    Compiling
+2026-May-27 00:12:43.639158 [DEBUG] foldhash v0.1.5
+2026-May-27 00:12:43.639158 [DEBUG] #14 28.96    Compiling hashbrown v0.15.5
+2026-May-27 00:12:44.081444 [DEBUG] #14 29.40    Compiling derive_more v2.1.1
+2026-May-27 00:12:44.314457 [DEBUG] #14 29.49    Compiling idna v1.1.0
+2026-May-27 00:12:45.207196 [DEBUG] #14 30.53    Compiling tokio-rustls v0.26.4
+2026-May-27 00:12:45.213663 [DEBUG] 
+2026-May-27 00:12:45.375140 [DEBUG] #14 30.70    Compiling cssparser v0.36.0
+2026-May-27 00:12:45.808528 [DEBUG] #14 31.13    Compiling
+2026-May-27 00:12:46.023559 [DEBUG] markup5ever v0.39.0
+2026-May-27 00:12:46.023559 [DEBUG] #14 31.20    Compiling rust-embed-utils v8.11.0
+2026-May-27 00:12:46.040612 [DEBUG] #14 31.36    Compiling
+2026-May-27 00:12:46.191724 [DEBUG] event-listener-strategy v0.5.4
+2026-May-27 00:12:46.195569 [DEBUG] 
+2026-May-27 00:12:46.280652 [DEBUG] #14 31.60    Compiling
+2026-May-27 00:12:46.435319 [DEBUG] axum-core v0.5.6
+2026-May-27 00:12:47.296854 [DEBUG] #14 32.62    Compiling sha1 v0.10.6
+2026-May-27 00:12:47.515315 [DEBUG] #14 32.84    Compiling
+2026-May-27 00:12:47.737390 [DEBUG] webpki-roots v1.0.6
+2026-May-27 00:12:47.737390 [DEBUG] #14 32.90    Compiling serde_path_to_error v0.1.20
+2026-May-27 00:12:47.798406 [DEBUG] #14 33.12    Compiling
+2026-May-27 00:12:47.921202 [DEBUG] headers-core v0.3.0
+2026-May-27 00:12:47.921202 [DEBUG] #14 33.18    Compiling servo_arc v0.4.3
+2026-May-27 00:12:47.921202 [DEBUG] #14 33.19    Compiling rustc-hash v2.1.1
+2026-May-27 00:12:47.921202 [DEBUG] #14 33.24    Compiling
+2026-May-27 00:12:48.086164 [DEBUG] matchit v0.8.4
+2026-May-27 00:12:48.086164 [DEBUG] #14 33.26    Compiling iri-string v0.7.10
+2026-May-27 00:12:48.490754 [DEBUG] #14 33.81    Compiling
+2026-May-27 00:12:48.641705 [DEBUG] http-range-header v0.4.2
+2026-May-27 00:12:48.771166 [DEBUG] #14 34.09    Compiling axum v0.8.9
+2026-May-27 00:12:50.170572 [DEBUG] #14 35.49    Compiling
+2026-May-27 00:12:50.321607 [DEBUG] tower-http v0.6.8
+2026-May-27 00:12:52.877382 [DEBUG] #14 38.20    Compiling headers v0.4.1
+2026-May-27 00:12:53.123440 [DEBUG] #14 38.29    Compiling hyper-rustls v0.27.7
+2026-May-27 00:12:53.677981 [DEBUG] #14 39.00    Compiling uuid v1.21.0
+2026-May-27 00:12:54.170093 [DEBUG] #14 39.49    Compiling async-lock v3.4.2
+2026-May-27 00:12:54.595891 [DEBUG] #14 39.92    Compiling
+2026-May-27 00:12:54.835275 [DEBUG] rust-embed-impl v8.11.0
+2026-May-27 00:12:54.838913 [DEBUG] #14 40.00    Compiling html5ever v0.39.0
+2026-May-27 00:12:55.100788 [DEBUG] #14 40.42    Compiling
+2026-May-27 00:12:55.259650 [DEBUG] url v2.5.8
+2026-May-27 00:12:55.263411 [DEBUG] 
+2026-May-27 00:12:56.365246 [DEBUG] #14 41.69    Compiling hashlink v0.10.0
+2026-May-27 00:12:56.907199 [DEBUG] #14 42.23    Compiling crossbeam-channel v0.5.15
+2026-May-27 00:12:57.140975 [DEBUG] #14 42.24    Compiling crossbeam-epoch v0.9.18
+2026-May-27 00:12:57.140975 [DEBUG] #14 42.31    Compiling encoding_rs v0.8.35
+2026-May-27 00:12:57.287030 [DEBUG] #14 42.61    Compiling
+2026-May-27 00:12:57.443524 [DEBUG] fallible-iterator v0.3.0
+2026-May-27 00:12:57.461267 [DEBUG] #14 42.78    Compiling
+2026-May-27 00:12:57.592509 [DEBUG] ego-tree v0.11.0
+2026-May-27 00:12:57.592509 [DEBUG] #14 42.84    Compiling tagptr v0.2.0
+2026-May-27 00:12:57.592509 [DEBUG] #14 42.91    Compiling utf8-width v0.1.8
+2026-May-27 00:12:57.702838 [DEBUG] #14 42.95    Compiling fallible-streaming-iterator v0.1.9
+2026-May-27 00:12:57.702838 [DEBUG] #14 43.00    Compiling scraper v0.26.0
+2026-May-27 00:12:57.702838 [DEBUG] #14 43.02    Compiling
+2026-May-27 00:12:57.816958 [DEBUG] html-escape v0.2.13
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.04 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.04    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/element_ref/mod.rs:168:16
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.04     |
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.04 168 |             if let Edge::Open(node) = edge
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.05     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.05     |
+2026-May-27 00:12:57.816958 [DEBUG] #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:<REDACTED>@sha256:0104b334637a5f19aa9c983a91b54c89887c0984081f2068983107a6f6c21eeb
+2026-May-27 00:13:18.800940 #5 resolve docker.io/library/debian:bookworm-slim@sha256:0104b334637a5f19aa9c983a91b54c89887c0984081f2068983107a6f6c21eeb done
+2026-May-27 00:13:18.800940 #5 DONE 0.0s
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 #6 [runtime 2/3] RUN apt-get update && apt-get install -y --no-install-recommends     ca-certificates     && rm -rf /var/lib/apt/lists/*
+2026-May-27 00:13:18.800940 #6 CACHED
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 #7 [builder 1/7] FROM docker.io/library/rust:1.85-slim@sha256:9f841bbe9e7d8e37ceb96ed907265a3a0df7f44e3737d0b100e7907a679acb36
+2026-May-27 00:13:18.800940 #7 resolve docker.io/library/rust:1.85-slim@sha256:9f841bbe9e7d8e37ceb96ed907265a3a0df7f44e3737d0b100e7907a679acb36 0.0s done
+2026-May-27 00:13:18.800940 #7 CACHED
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 #8 [internal] load build context
+2026-May-27 00:13:18.800940 #8 transferring context: 187.12kB 0.0s done
+2026-May-27 00:13:18.800940 #8 DONE 0.0s
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 #9 [builder 2/7] RUN apt-get update && apt-get install -y --no-install-recommends     curl unzip pkg-config libssl-dev ca-certificates     && rm -rf /var/lib/apt/lists/*
+2026-May-27 00:13:18.800940 #9 0.068 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+2026-May-27 00:<REDACTED>@INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+2026-May-27 00:13:18.800940 #9 2.801 debconf: falling back to frontend: Teletype
+2026-May-27 00:13:18.800940 #9 3.994 Updating certificates in /etc/ssl/certs...
+2026-May-27 00:13:18.800940 #9 4.672 rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+2026-May-27 00:13:18.800940 #9 4.676 2 added, 0 removed; done.
+2026-May-27 00:13:18.800940 #9 4.688 Setting up pkg-config:amd64 (1.8.1-1) ...
+2026-May-27 00:13:18.800940 #9 4.690 Setting up libcurl4:amd64 (7.88.1-10+deb12u14) ...
+2026-May-27 00:13:18.800940 #9 4.692 Setting up curl (7.88.1-10+deb12u14) ...
+2026-May-27 00:13:18.800940 #9 4.693 Processing triggers for libc-bin (2.36-9+deb12u10) ...
+2026-May-27 00:13:18.800940 #9 4.704 Processing triggers for ca-certificates (20230311+deb12u1) ...
+2026-May-27 00:13:18.800940 #9 4.708 Updating certificates in /etc/ssl/certs...
+2026-May-27 00:13:18.800940 #9 5.139 0 added, 0 removed; done.
+2026-May-27 00:13:18.800940 #9 5.139 Running hooks in /etc/ca-certificates/update.d...
+2026-May-27 00:13:18.800940 #9 5.140 done.
+2026-May-27 00:13:18.800940 #9 DONE 5.2s
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 #10 [builder 3/7] RUN curl -fsSL https://bun.sh/install | bash
+2026-May-27 00:<REDACTED>@5.9.3
+2026-May-27 00:13:18.800940 #13 0.331 + vite@6.4.2
+2026-May-27 00:13:18.800940 #13 0.331 + @fullcalendar/core@6.1.20
+2026-May-27 00:13:18.800940 #13 0.331 + @fullcalendar/daygrid@6.1.20
+2026-May-27 00:13:18.800940 #13 0.331 + @fullcalendar/interaction@6.1.20
+2026-May-27 00:13:18.800940 #13 0.331 + @fullcalendar/timegrid@6.1.20
+2026-May-27 00:13:18.800940 #13 0.331 + ical.js@2.2.1
+2026-May-27 00:13:18.800940 #13 0.331 + path@0.12.7
+2026-May-27 00:13:18.800940 #13 0.331
+2026-May-27 00:13:18.800940 #13 0.331 25 packages installed [283.00ms]
+2026-May-27 00:13:18.800940 #13 0.340 $ vite build
+2026-May-27 00:13:18.800940 #13 0.567 vite v6.4.2 building for production...
+2026-May-27 00:13:18.800940 #13 0.648 transforming...
+2026-May-27 00:13:18.800940 #13 1.375 ✓ 20 modules transformed.
+2026-May-27 00:13:18.800940 #13 1.467 rendering chunks...
+2026-May-27 00:13:18.800940 #13 1.665 computing gzip size...
+2026-May-27 00:13:18.800940 #13 1.679 dist/public.html                   0.58 kB │ gzip:  0.34 kB
+2026-May-27 00:13:18.800940 #13 1.679 dist/index.html                    1.18 kB │ gzip:  0.50 kB
+2026-May-27 00:13:18.800940 #13 1.679 dist/assets/public-bFoiVYm2.css    0.28 kB │ gzip:  0.22 kB
+2026-May-27 00:13:18.800940 #13 1.679 dist/assets/main-8fHRMc0s.css      2.09 kB │ gzip:  0.77 kB
+2026-May-27 00:13:18.800940 #13 1.679 dist/assets/public-DT_lmkcK.js     1.22 kB │ gzip:  0.67 kB │ map:     3.51 kB
+2026-May-27 00:13:18.800940 #13 1.679 dist/assets/main-UJuXtsND.js       5.99 kB │ gzip:  2.25 kB │ map:    18.81 kB
+2026-May-27 00:13:18.800940 #13 1.679 dist/assets/index-DdSoYi_T.js    337.76 kB │ gzip: 99.79 kB │ map: 1,350.82 kB
+2026-May-27 00:13:18.800940 #13 1.679 ✓ built in 1.07s
+2026-May-27 00:13:18.800940 #13 DONE 1.7s
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 #14 [builder 7/7] RUN cargo build --release
+2026-May-27 00:13:18.800940 #14 0.128     Updating crates.io index
+2026-May-27 00:13:18.800940 #14 6.660  Downloading crates ...
+2026-May-27 00:13:18.800940 #14 6.680   Downloaded autocfg v1.5.0
+2026-May-27 00:13:18.800940 #14 6.689   Downloaded dtoa-short v0.3.5
+2026-May-27 00:13:18.800940 #14 6.692   Downloaded pin-utils v0.1.0
+2026-May-27 00:13:18.800940 #14 6.694   Downloaded yoke v0.8.1
+2026-May-27 00:13:18.800940 #14 6.698   Downloaded rustversion v1.0.22
+2026-May-27 00:13:18.800940 #14 6.704   Downloaded zerovec-derive v0.11.2
+2026-May-27 00:13:18.800940 #14 6.707   Downloaded percent-encoding v2.3.2
+2026-May-27 00:13:18.800940 #14 6.710   Downloaded zerotrie v0.2.3
+2026-May-27 00:13:18.800940 #14 6.715   Downloaded tendril v0.5.0
+2026-May-27 00:13:18.800940 #14 6.718   Downloaded yoke-derive v0.8.1
+2026-May-27 00:13:18.800940 #14 6.720   Downloaded zerofrom-derive v0.1.6
+2026-May-27 00:13:18.800940 #14 6.722   Downloaded zerocopy v0.8.40
+2026-May-27 00:13:18.800940 #14 6.735   Downloaded typenum v1.20.0
+2026-May-27 00:13:18.800940 #14 6.740   Downloaded tokio-util v0.7.18
+2026-May-27 00:13:18.800940 #14 6.750   Downloaded utf-8 v0.7.6
+2026-May-27 00:13:18.800940 #14 6.752   Downloaded thiserror-impl v2.0.18
+2026-May-27 00:13:18.800940 #14 6.754   Downloaded try-lock v0.2.5
+2026-May-27 00:13:18.800940 #14 6.756   Downloaded url v2.5.8
+2026-May-27 00:13:18.800940 #14 6.759   Downloaded tower v0.5.3
+2026-May-27 00:13:18.800940 #14 6.773   Downloaded serde_json v1.0.149
+2026-May-27 00:13:18.800940 #14 6.782   Downloaded serde v1.0.228
+2026-May-27 00:13:18.800940 #14 6.786   Downloaded tower-layer v0.3.3
+2026-May-27 00:13:18.800940 #14 6.788   Downloaded sha2 v0.10.9
+2026-May-27 00:13:18.800940 #14 6.791   Downloaded moka v0.12.15
+2026-May-27 00:13:18.800940 #14 6.802   Downloaded rustls v0.23.37
+2026-May-27 00:13:18.800940 #14 6.818   Downloaded slab v0.4.12
+2026-May-27 00:13:18.800940 #14 6.820   Downloaded webpki-roots v1.0.6
+2026-May-27 00:13:18.800940 #14 6.824   Downloaded vcpkg v0.2.15
+2026-May-27 00:13:18.800940 #14 6.896   Downloaded syn v2.0.117
+2026-May-27 00:13:18.800940 #14 6.910   Downloaded futures-util v0.3.32
+2026-May-27 00:13:18.800940 #14 6.928   Downloaded synstructure v0.13.2
+2026-May-27 00:13:18.800940 #14 6.929   Downloaded tracing v0.1.44
+2026-May-27 00:13:18.800940 #14 6.951   Downloaded serde_derive v1.0.228
+2026-May-27 00:13:18.800940 #14 6.955   Downloaded iri-string v0.7.10
+2026-May-27 00:13:18.800940 #14 6.965   Downloaded want v0.3.1
+2026-May-27 00:13:18.800940 #14 6.966   Downloaded uuid v1.21.0
+2026-May-27 00:13:18.800940 #14 6.970   Downloaded libc v0.2.186
+2026-May-27 00:13:18.800940 #14 7.022   Downloaded unicode-ident v1.0.24
+2026-May-27 00:13:18.800940 #14 7.026   Downloaded tokio-rustls v0.26.4
+2026-May-27 00:13:18.800940 #14 7.029   Downloaded string_cache v0.9.0
+2026-May-27 00:13:18.800940 #14 7.031   Downloaded shlex v1.3.0
+2026-May-27 00:13:18.800940 #14 7.032   Downloaded servo_arc v0.4.3
+2026-May-27 00:13:18.800940 #14 7.033   Downloaded rustls-pki-types v1.14.0
+2026-May-27 00:13:18.800940 #14 7.037   Downloaded idna v1.1.0
+2026-May-27 00:13:18.800940 #14 7.041   Downloaded hashbrown v0.16.1
+2026-May-27 00:13:18.800940 #14 7.048   Downloaded utf8_iter v1.0.4
+2026-May-27 00:13:18.800940 #14 7.049   Downloaded tracing-core v0.1.36
+2026-May-27 00:13:18.800940 #14 7.053   Downloaded tokio-macros v2.7.0
+2026-May-27 00:13:18.800940 #14 7.054   Downloaded rustc_version v0.4.1
+2026-May-27 00:13:18.800940 #14 7.056   Downloaded rust-embed-impl v8.11.0
+2026-May-27 00:13:18.800940 #14 7.057   Downloaded rusqlite v0.37.0
+2026-May-27 00:13:18.800940 #14 7.065   Downloaded quinn-proto v0.11.13
+2026-May-27 00:13:18.800940 #14 7.074   Downloaded portable-atomic v1.13.1
+2026-May-27 00:13:18.800940 #14 7.083   Downloaded tokio v1.52.1
+2026-May-27 00:13:18.800940 #14 7.140   Downloaded zerovec v0.11.5
+2026-May-27 00:13:18.800940 #14 7.147   Downloaded icu_properties_data v2.1.2
+2026-May-27 00:13:18.800940 #14 7.159   Downloaded hyper-util v0.1.20
+2026-May-27 00:13:18.800940 #14 7.168   Downloaded h2 v0.4.13
+2026-May-27 00:13:18.800940 #14 7.176   Downloaded walkdir v2.5.0
+2026-May-27 00:13:18.800940 #14 7.178   Downloaded tower-http v0.6.8
+2026-May-27 00:13:18.800940 #14 7.189   Downloaded encoding_rs v0.8.35
+2026-May-27 00:13:18.800940 #14 7.212   Downloaded tinyvec v1.10.0
+2026-May-27 00:13:18.800940 #14 7.215   Downloaded stable_deref_trait v1.2.1
+2026-May-27 00:13:18.800940 #14 7.216   Downloaded semver v1.0.27
+2026-May-27 00:13:18.800940 #14 7.219   Downloaded rustls-webpki v0.103.9
+2026-May-27 00:13:18.800940 #14 7.223   Downloaded rust-embed v8.11.0
+2026-May-27 00:13:18.800940 #14 7.233   Downloaded potential_utf v0.1.4
+2026-May-27 00:13:18.800940 #14 7.234   Downloaded hyper v1.8.1
+2026-May-27 00:13:18.800940 #14 7.242   Downloaded http v1.4.0
+2026-May-27 00:13:18.800940 #14 7.247   Downloaded base64 v0.22.1
+2026-May-27 00:13:18.800940 #14 7.252   Downloaded subtle v2.6.1
+2026-May-27 00:13:18.800940 #14 7.253   Downloaded socket2 v0.6.3
+2026-May-27 00:13:18.800940 #14 7.256   Downloaded smallvec v1.15.1
+2026-May-27 00:13:18.800940 #14 7.258   Downloaded serde_core v1.0.228
+2026-May-27 00:13:18.800940 #14 7.262   Downloaded ryu v1.0.23
+2026-May-27 00:13:18.800940 #14 7.266   Downloaded rand_core v0.9.5
+2026-May-27 00:13:18.800940 #14 7.267   Downloaded pkg-config v0.3.33
+2026-May-27 00:13:18.800940 #14 7.269   Downloaded mio v1.2.0
+2026-May-27 00:13:18.800940 #14 7.277   Downloaded memchr v2.8.0
+2026-May-27 00:13:18.800940 #14 7.284   Downloaded indexmap v2.13.0
+2026-May-27 00:13:18.800940 #14 7.289   Downloaded icu_normalizer_data v2.1.1
+2026-May-27 00:13:18.800940 #14 7.292   Downloaded icu_collections v2.1.1
+2026-May-27 00:13:18.800940 #14 7.300   Downloaded headers v0.4.1
+2026-May-27 00:13:18.800940 #14 7.308   Downloaded hashbrown v0.15.5
+2026-May-27 00:13:18.800940 #14 7.314   Downloaded writeable v0.6.2
+2026-May-27 00:13:18.800940 #14 7.317   Downloaded web_atoms v0.2.3
+2026-May-27 00:13:18.800940 #14 7.318   Downloaded utf8-width v0.1.8
+2026-May-27 00:13:18.800940 #14 7.319   Downloaded sync_wrapper v1.0.2
+2026-May-27 00:13:18.800940 #14 7.320   Downloaded rustc-hash v2.1.1
+2026-May-27 00:13:18.800940 #14 7.322   Downloaded rand_chacha v0.9.0
+2026-May-27 00:13:18.800940 #14 7.323   Downloaded quinn-udp v0.5.14
+2026-May-27 00:13:18.800940 #14 7.326   Downloaded log v0.4.29
+2026-May-27 00:13:18.800940 #14 7.329   Downloaded ring v0.17.14
+2026-May-27 00:13:18.800940 #14 7.383   Downloaded icu_properties v2.1.2
+2026-May-27 00:13:18.800940 #14 7.386   Downloaded icu_locale_core v2.1.1
+2026-May-27 00:13:18.800940 #14 7.395   Downloaded hyper-rustls v0.27.7
+2026-May-27 00:13:18.800940 #14 7.398   Downloaded httparse v1.10.1
+2026-May-27 00:13:18.800940 #14 7.401   Downloaded html5ever v0.39.0
+2026-May-27 00:13:18.800940 #14 7.406   Downloaded getrandom v0.4.1
+2026-May-27 00:13:18.800940 #14 7.411   Downloaded zmij v1.0.21
+2026-May-27 00:13:18.800940 #14 7.414   Downloaded zerofrom v0.1.6
+2026-May-27 00:13:18.800940 #14 7.415   Downloaded version_check v0.9.5
+2026-May-27 00:13:18.800940 #14 7.416   Downloaded untrusted v0.9.0
+2026-May-27 00:13:18.800940 #14 7.418   Downloaded unicase v2.9.0
+2026-May-27 00:13:18.800940 #14 7.420   Downloaded tower-service v0.3.3
+2026-May-27 00:13:18.800940 #14 7.421   Downloaded tinyvec_macros v0.1.1
+2026-May-27 00:13:18.800940 #14 7.422   Downloaded tinystr v0.8.2
+2026-May-27 00:13:18.800940 #14 7.425   Downloaded string_cache_codegen v0.6.1
+2026-May-27 00:13:18.800940 #14 7.426   Downloaded siphasher v1.0.2
+2026-May-27 00:13:18.800940 #14 7.428   Downloaded sha1 v0.10.6
+2026-May-27 00:13:18.800940 #14 7.430   Downloaded serde_urlencoded v0.7.1
+2026-May-27 00:13:18.800940 #14 7.432   Downloaded scraper v0.26.0
+2026-May-27 00:13:18.800940 #14 7.435   Downloaded same-file v1.0.6
+2026-May-27 00:13:18.800940 #14 7.437   Downloaded rand v0.9.2
+2026-May-27 00:13:18.800940 #14 7.444   Downloaded quinn v0.11.9
+2026-May-27 00:13:18.800940 #14 7.449   Downloaded proc-macro2 v1.0.106
+2026-May-27 00:13:18.800940 #14 7.454   Downloaded ppv-lite86 v0.2.21
+2026-May-27 00:13:18.800940 #14 7.456   Downloaded parking_lot v0.12.5
+2026-May-27 00:13:18.800940 #14 7.459   Downloaded num-traits v0.2.19
+2026-May-27 00:13:18.800940 #14 7.463   Downloaded litemap v0.8.1
+2026-May-27 00:13:18.800940 #14 7.466   Downloaded icu_provider v2.1.1
+2026-May-27 00:13:18.800940 #14 7.469   Downloaded icu_normalizer v2.1.1
+2026-May-27 00:13:18.800940 #14 7.473   Downloaded crossbeam-channel v0.5.15
+2026-May-27 00:13:18.800940 #14 7.479   Downloaded zeroize v1.8.2
+2026-May-27 00:13:18.800940 #14 7.480   Downloaded tagptr v0.2.0
+2026-May-27 00:13:18.800940 #14 7.482   Downloaded signal-hook-registry v1.4.8
+2026-May-27 00:13:18.800940 #14 7.483   Downloaded serde_path_to_error v0.1.20
+2026-May-27 00:13:18.800940 #14 7.485   Downloaded selectors v0.36.1
+2026-May-27 00:13:18.800940 #14 7.489   Downloaded scopeguard v1.2.0
+2026-May-27 00:13:18.800940 #14 7.490   Downloaded rust-embed-utils v8.11.0
+2026-May-27 00:13:18.800940 #14 7.492   Downloaded reqwest v0.12.28
+2026-May-27 00:13:18.800940 #14 7.498   Downloaded quote v1.0.44
+2026-May-27 00:13:18.800940 #14 7.502   Downloaded precomputed-hash v0.1.1
+2026-May-27 00:13:18.800940 #14 7.502   Downloaded phf_macros v0.13.1
+2026-May-27 00:13:18.800940 #14 7.504   Downloaded phf_generator v0.13.1
+2026-May-27 00:13:18.800940 #14 7.505   Downloaded phf v0.13.1
+2026-May-27 00:13:18.800940 #14 7.506   Downloaded once_cell v1.21.3
+2026-May-27 00:13:18.800940 #14 7.510   Downloaded mime_guess v2.0.5
+2026-May-27 00:13:18.800940 #14 7.512   Downloaded mime v0.3.17
+2026-May-27 00:13:18.800940 #14 7.513   Downloaded matchit v0.8.4
+2026-May-27 00:13:18.800940 #14 7.516   Downloaded markup5ever v0.39.0
+2026-May-27 00:13:18.800940 #14 7.518   Downloaded ipnet v2.11.0
+2026-May-27 00:13:18.800940 #14 7.520   Downloaded http-body-util v0.1.3
+2026-May-27 00:13:18.800940 #14 7.522   Downloaded html-escape v0.2.13
+2026-May-27 00:13:18.800940 #14 7.525   Downloaded hashlink v0.10.0
+2026-May-27 00:13:18.800940 #14 7.527   Downloaded getrandom v0.2.17
+2026-May-27 00:13:18.800940 #14 7.530   Downloaded foldhash v0.1.5
+2026-May-27 00:13:18.800940 #14 7.532   Downloaded fastrand v2.3.0
+2026-May-27 00:13:18.800940 #14 7.533   Downloaded fallible-streaming-iterator v0.1.9
+2026-May-27 00:13:18.800940 #14 7.535   Downloaded fallible-iterator v0.3.0
+2026-May-27 00:13:18.800940 #14 7.536   Downloaded event-listener v5.4.1
+2026-May-27 00:13:18.800940 #14 7.539   Downloaded ego-tree v0.11.0
+2026-May-27 00:13:18.800940 #14 7.541   Downloaded displaydoc v0.2.5
+2026-May-27 00:13:18.800940 #14 7.545   Downloaded pin-project-lite v0.2.17
+2026-May-27 00:13:18.800940 #14 7.553   Downloaded parking v2.2.1
+2026-May-27 00:13:18.800940 #14 7.554   Downloaded new_debug_unreachable v1.0.6
+2026-May-27 00:13:18.800940 #14 7.555   Downloaded lru-slab v0.1.2
+2026-May-27 00:13:18.800940 #14 7.556   Downloaded lock_api v0.4.14
+2026-May-27 00:13:18.800940 #14 7.558   Downloaded http-body v1.0.1
+2026-May-27 00:13:18.800940 #14 7.560   Downloaded thiserror v2.0.18
+2026-May-27 00:13:18.800940 #14 7.568   Downloaded phf_codegen v0.13.1
+2026-May-27 00:13:18.800940 #14 7.569   Downloaded parking_lot_core v0.9.12
+2026-May-27 00:13:18.800940 #14 7.571   Downloaded itoa v1.0.17
+2026-May-27 00:13:18.800940 #14 7.573   Downloaded idna_adapter v1.2.1
+2026-May-27 00:13:18.800940 #14 7.575   Downloaded getrandom v0.3.4
+2026-May-27 00:13:18.800940 #14 7.579   Downloaded generic-array v0.14.7
+2026-May-27 00:13:18.800940 #14 7.583   Downloaded derive_more-impl v2.1.1
+2026-May-27 00:13:18.800940 #14 7.590   Downloaded crossbeam-utils v0.8.21
+2026-May-27 00:13:18.800940 #14 7.594   Downloaded phf_shared v0.13.1
+2026-May-27 00:13:18.800940 #14 7.596   Downloaded httpdate v1.0.3
+2026-May-27 00:13:18.800940 #14 7.597   Downloaded http-range-header v0.4.2
+2026-May-27 00:13:18.800940 #14 7.598   Downloaded headers-core v0.3.0
+2026-May-27 00:13:18.800940 #14 7.599   Downloaded libsqlite3-sys v0.35.0
+2026-May-27 00:13:18.800940 #14 7.681   Downloaded futures-task v0.3.32
+2026-May-27 00:13:18.800940 #14 7.683   Downloaded ics v0.5.8
+2026-May-27 00:13:18.800940 #14 7.684   Downloaded futures-sink v0.3.32
+2026-May-27 00:13:18.800940 #14 7.685   Downloaded futures-macro v0.3.32
+2026-May-27 00:13:18.800940 #14 7.686   Downloaded futures-core v0.3.32
+2026-May-27 00:13:18.800940 #14 7.688   Downloaded futures-channel v0.3.32
+2026-May-27 00:13:18.800940 #14 7.690   Downloaded form_urlencoded v1.2.2
+2026-May-27 00:13:18.800940 #14 7.691   Downloaded fnv v1.0.7
+2026-May-27 00:13:18.800940 #14 7.692   Downloaded find-msvc-tools v0.1.9
+2026-May-27 00:13:18.800940 #14 7.694   Downloaded event-listener-strategy v0.5.4
+2026-May-27 00:13:18.800940 #14 7.695   Downloaded errno v0.3.14
+2026-May-27 00:13:18.800940 #14 7.697   Downloaded equivalent v1.0.2
+2026-May-27 00:13:18.800940 #14 7.698   Downloaded dtoa v1.0.11
+2026-May-27 00:13:18.800940 #14 7.700   Downloaded digest v0.10.7
+2026-May-27 00:13:18.800940 #14 7.702   Downloaded derive_more v2.1.1
+2026-May-27 00:13:18.800940 #14 7.719   Downloaded cssparser-macros v0.6.1
+2026-May-27 00:13:18.800940 #14 7.720   Downloaded cssparser v0.36.0
+2026-May-27 00:13:18.800940 #14 7.722   Downloaded crypto-common v0.1.7
+2026-May-27 00:13:18.800940 #14 7.724   Downloaded crossbeam-epoch v0.9.18
+2026-May-27 00:13:18.800940 #14 7.726   Downloaded cpufeatures v0.2.17
+2026-May-27 00:13:18.800940 #14 7.728   Downloaded concurrent-queue v2.5.0
+2026-May-27 00:13:18.800940 #14 7.730   Downloaded chrono v0.4.44
+2026-May-27 00:13:18.800940 #14 7.739   Downloaded cfg_aliases v0.2.1
+2026-May-27 00:13:18.800940 #14 7.740   Downloaded cfg-if v1.0.4
+2026-May-27 00:13:18.800940 #14 7.741   Downloaded bytes v1.11.1
+2026-May-27 00:13:18.800940 #14 7.747   Downloaded block-buffer v0.10.4
+2026-May-27 00:13:18.800940 #14 7.748   Downloaded axum-extra v0.10.3
+2026-May-27 00:13:18.800940 #14 7.753   Downloaded axum-core v0.5.6
+2026-May-27 00:13:18.800940 #14 7.755   Downloaded axum v0.8.9
+2026-May-27 00:13:18.800940 #14 7.766   Downloaded atomic-waker v1.1.2
+2026-May-27 00:13:18.800940 #14 7.767   Downloaded async-lock v3.4.2
+2026-May-27 00:13:18.800940 #14 7.770   Downloaded cc v1.2.56
+2026-May-27 00:13:18.800940 #14 7.773   Downloaded bitflags v2.11.0
+2026-May-27 00:13:18.800940 #14 7.828    Compiling proc-macro2 v1.0.106
+2026-May-27 00:13:18.800940 #14 7.828    Compiling unicode-ident v1.0.24
+2026-May-27 00:13:18.800940 #14 7.829    Compiling quote v1.0.44
+2026-May-27 00:13:18.800940 #14 7.829    Compiling libc v0.2.186
+2026-May-27 00:13:18.800940 #14 7.905    Compiling cfg-if v1.0.4
+2026-May-27 00:13:18.800940 #14 7.940    Compiling smallvec v1.15.1
+2026-May-27 00:13:18.800940 #14 8.117    Compiling version_check v0.9.5
+2026-May-27 00:13:18.800940 #14 8.141    Compiling itoa v1.0.17
+2026-May-27 00:13:18.800940 #14 8.317    Compiling pin-project-lite v0.2.17
+2026-May-27 00:13:18.800940 #14 8.380    Compiling generic-array v0.14.7
+2026-May-27 00:13:18.800940 #14 8.395    Compiling bytes v1.11.1
+2026-May-27 00:13:18.800940 #14 8.500    Compiling stable_deref_trait v1.2.1
+2026-May-27 00:13:18.800940 #14 8.533    Compiling siphasher v1.0.2
+2026-May-27 00:13:18.800940 #14 8.723    Compiling syn v2.0.117
+2026-May-27 00:13:18.800940 #14 8.772    Compiling futures-core v0.3.32
+2026-May-27 00:13:18.800940 #14 8.843    Compiling phf_shared v0.13.1
+2026-May-27 00:13:18.800940 #14 8.891    Compiling fastrand v2.3.0
+2026-May-27 00:13:18.800940 #14 8.972    Compiling phf_generator v0.13.1
+2026-May-27 00:13:18.800940 #14 8.982    Compiling find-msvc-tools v0.1.9
+2026-May-27 00:13:18.800940 #14 9.065    Compiling shlex v1.3.0
+2026-May-27 00:13:18.800940 #14 9.091    Compiling errno v0.3.14
+2026-May-27 00:13:18.800940 #14 9.099    Compiling http v1.4.0
+2026-May-27 00:13:18.800940 #14 9.145    Compiling cc v1.2.56
+2026-May-27 00:13:18.800940 #14 9.166    Compiling once_cell v1.21.3
+2026-May-27 00:13:18.800940 #14 9.312    Compiling signal-hook-registry v1.4.8
+2026-May-27 00:13:18.800940 #14 9.713    Compiling mio v1.2.0
+2026-May-27 00:13:18.800940 #14 10.07    Compiling socket2 v0.6.3
+2026-May-27 00:13:18.800940 #14 10.22    Compiling slab v0.4.12
+2026-May-27 00:13:18.800940 #14 10.34    Compiling serde_core v1.0.228
+2026-May-27 00:13:18.800940 #14 10.53    Compiling tracing-core v0.1.36
+2026-May-27 00:13:18.800940 #14 10.56    Compiling equivalent v1.0.2
+2026-May-27 00:13:18.800940 #14 10.59    Compiling typenum v1.20.0
+2026-May-27 00:13:18.800940 #14 11.17    Compiling synstructure v0.13.2
+2026-May-27 00:13:18.800940 #14 11.42    Compiling tracing v0.1.44
+2026-May-27 00:13:18.800940 #14 11.54    Compiling http-body v1.0.1
+2026-May-27 00:13:18.800940 #14 11.62    Compiling phf_codegen v0.13.1
+2026-May-27 00:13:18.800940 #14 11.66    Compiling hashbrown v0.16.1
+2026-May-27 00:13:18.800940 #14 11.68    Compiling futures-task v0.3.32
+2026-May-27 00:13:18.800940 #14 11.77    Compiling futures-sink v0.3.32
+2026-May-27 00:13:18.800940 #14 11.82    Compiling parking_lot_core v0.9.12
+2026-May-27 00:13:18.800940 #14 11.94    Compiling percent-encoding v2.3.2
+2026-May-27 00:13:18.800940 #14 12.10    Compiling crossbeam-utils v0.8.21
+2026-May-27 00:13:18.800940 #14 12.15    Compiling zerofrom-derive v0.1.6
+2026-May-27 00:13:18.800940 #14 12.16    Compiling yoke-derive v0.8.1
+2026-May-27 00:13:18.800940 #14 12.29    Compiling zerovec-derive v0.11.2
+2026-May-27 00:13:18.800940 #14 12.30    Compiling tokio-macros v2.7.0
+2026-May-27 00:13:18.800940 #14 12.84    Compiling tokio v1.52.1
+2026-May-27 00:13:18.800940 #14 12.93    Compiling displaydoc v0.2.5
+2026-May-27 00:13:18.800940 #14 13.07    Compiling zerofrom v0.1.6
+2026-May-27 00:13:18.800940 #14 13.13    Compiling yoke v0.8.1
+2026-May-27 00:13:18.800940 #14 13.18    Compiling futures-macro v0.3.32
+2026-May-27 00:13:18.800940 #14 13.24    Compiling zerovec v0.11.5
+2026-May-27 00:13:18.800940 #14 13.72    Compiling tinystr v0.8.2
+2026-May-27 00:13:18.800940 #14 13.81    Compiling indexmap v2.13.0
+2026-May-27 00:13:18.800940 #14 13.83    Compiling futures-util v0.3.32
+2026-May-27 00:13:18.800940 #14 13.87    Compiling ring v0.17.14
+2026-May-27 00:13:18.800940 #14 14.27    Compiling tower-service v0.3.3
+2026-May-27 00:13:18.800940 #14 14.30    Compiling scopeguard v1.2.0
+2026-May-27 00:13:18.800940 #14 14.37    Compiling litemap v0.8.1
+2026-May-27 00:13:18.800940 #14 14.44    Compiling httparse v1.10.1
+2026-May-27 00:13:18.800940 #14 14.52    Compiling httpdate v1.0.3
+2026-May-27 00:13:18.800940 #14 14.67    Compiling writeable v0.6.2
+2026-May-27 00:13:18.800940 #14 14.87    Compiling icu_locale_core v2.1.1
+2026-May-27 00:13:18.800940 #14 15.44    Compiling lock_api v0.4.14
+2026-May-27 00:13:18.800940 #14 16.43    Compiling potential_utf v0.1.4
+2026-May-27 00:13:18.800940 #14 16.53    Compiling tokio-util v0.7.18
+2026-May-27 00:13:18.800940 #14 16.68    Compiling zerotrie v0.2.3
+2026-May-27 00:13:18.800940 #14 16.95    Compiling phf_macros v0.13.1
+2026-May-27 00:13:18.800940 #14 17.34    Compiling block-buffer v0.10.4
+2026-May-27 00:13:18.800940 #14 17.45    Compiling crypto-common v0.1.7
+2026-May-27 00:13:18.800940 #14 17.52    Compiling zeroize v1.8.2
+2026-May-27 00:13:18.800940 #14 17.57    Compiling icu_normalizer_data v2.1.1
+2026-May-27 00:13:18.800940 #14 17.60    Compiling icu_properties_data v2.1.2
+2026-May-27 00:13:18.800940 #14 17.67    Compiling atomic-waker v1.1.2
+2026-May-27 00:13:18.800940 #14 17.71    Compiling fnv v1.0.7
+2026-May-27 00:13:18.800940 #14 17.72    Compiling new_debug_unreachable v1.0.6
+2026-May-27 00:13:18.800940 #14 17.76    Compiling try-lock v0.2.5
+2026-May-27 00:13:18.800940 #14 17.76    Compiling mime v0.3.17
+2026-May-27 00:13:18.800940 #14 17.86    Compiling want v0.3.1
+2026-May-27 00:13:18.800940 #14 17.94    Compiling h2 v0.4.13
+2026-May-27 00:13:18.800940 #14 18.08    Compiling rustls-pki-types v1.14.0
+2026-May-27 00:13:18.800940 #14 18.73    Compiling phf v0.13.1
+2026-May-27 00:13:18.800940 #14 18.82    Compiling digest v0.10.7
+2026-May-27 00:13:18.800940 #14 18.97    Compiling icu_provider v2.1.1
+2026-May-27 00:13:18.800940 #14 19.21    Compiling icu_collections v2.1.1
+2026-May-27 00:13:18.800940 #14 19.77    Compiling parking_lot v0.12.5
+2026-May-27 00:13:18.800940 #14 20.51    Compiling string_cache_codegen v0.6.1
+2026-May-27 00:13:18.800940 #14 20.66    Compiling getrandom v0.2.17
+2026-May-27 00:13:18.800940 #14 20.76    Compiling sync_wrapper v1.0.2
+2026-May-27 00:13:18.800940 #14 20.77    Compiling futures-channel v0.3.32
+2026-May-27 00:13:18.800940 #14 20.80    Compiling untrusted v0.9.0
+2026-May-27 00:13:18.800940 #14 20.86    Compiling pin-utils v0.1.0
+2026-May-27 00:13:18.800940 #14 20.89    Compiling serde v1.0.228
+2026-May-27 00:13:18.800940 #14 20.92    Compiling base64 v0.22.1
+2026-May-27 00:13:18.800940 #14 21.03    Compiling tower-layer v0.3.3
+2026-May-27 00:13:18.800940 #14 21.15    Compiling precomputed-hash v0.1.1
+2026-May-27 00:13:18.800940 #14 21.19    Compiling cpufeatures v0.2.17
+2026-May-27 00:13:18.800940 #14 21.23    Compiling hyper v1.8.1
+2026-May-27 00:13:18.800940 #14 21.83    Compiling web_atoms v0.2.3
+2026-May-27 00:13:18.800940 #14 22.54    Compiling serde_derive v1.0.228
+2026-May-27 00:13:18.800940 #14 22.89    Compiling form_urlencoded v1.2.2
+2026-May-27 00:13:18.800940 #14 23.02    Compiling http-body-util v0.1.3
+2026-May-27 00:13:18.800940 #14 23.20    Compiling rustls v0.23.37
+2026-May-27 00:13:18.800940 #14 23.31    Compiling bitflags v2.11.0
+2026-May-27 00:13:18.800940 #14 23.52    Compiling log v0.4.29
+2026-May-27 00:13:18.800940 #14 23.66    Compiling zmij v1.0.21
+2026-May-27 00:13:18.800940 #14 23.79    Compiling unicase v2.9.0
+2026-May-27 00:13:18.800940 #14 23.89    Compiling ipnet v2.11.0
+2026-May-27 00:13:18.800940 #14 24.53    Compiling hyper-util v0.1.20
+2026-May-27 00:13:18.800940 #14 24.71    Compiling mime_guess v2.0.5
+2026-May-27 00:13:18.800940 #14 24.97    Compiling icu_properties v2.1.2
+2026-May-27 00:13:18.800940 #14 25.03    Compiling icu_normalizer v2.1.1
+2026-May-27 00:13:18.800940 #14 25.16    Compiling rustls-webpki v0.103.9
+2026-May-27 00:13:18.800940 #14 26.26    Compiling string_cache v0.9.0
+2026-May-27 00:13:18.800940 #14 26.28    Compiling tower v0.5.3
+2026-May-27 00:13:18.800940 #14 26.47    Compiling concurrent-queue v2.5.0
+2026-May-27 00:13:18.800940 #14 26.60    Compiling pkg-config v0.3.33
+2026-May-27 00:13:18.800940 #14 26.73    Compiling serde_json v1.0.149
+2026-May-27 00:13:18.800940 #14 26.78    Compiling same-file v1.0.6
+2026-May-27 00:13:18.800940 #14 26.82    Compiling ryu v1.0.23
+2026-May-27 00:13:18.800940 #14 26.83    Compiling vcpkg v0.2.15
+2026-May-27 00:13:18.800940 #14 26.92    Compiling dtoa v1.0.11
+2026-May-27 00:13:18.800940 #14 27.00    Compiling subtle v2.6.1
+2026-May-27 00:13:18.800940 #14 27.02    Compiling parking v2.2.1
+2026-May-27 00:13:18.800940 #14 27.08    Compiling autocfg v1.5.0
+2026-May-27 00:13:18.800940 #14 27.15    Compiling getrandom v0.4.1
+2026-May-27 00:13:18.800940 #14 27.25    Compiling utf-8 v0.7.6
+2026-May-27 00:13:18.800940 #14 27.29    Compiling libsqlite3-sys v0.35.0
+2026-May-27 00:13:18.800940 #14 27.31    Compiling num-traits v0.2.19
+2026-May-27 00:13:18.800940 #14 27.34    Compiling tendril v0.5.0
+2026-May-27 00:13:18.800940 #14 27.36    Compiling sha2 v0.10.9
+2026-May-27 00:13:18.800940 #14 27.42    Compiling event-listener v5.4.1
+2026-May-27 00:13:18.800940 #14 27.57    Compiling dtoa-short v0.3.5
+2026-May-27 00:13:18.800940 #14 27.58    Compiling serde_urlencoded v0.7.1
+2026-May-27 00:13:18.800940 #14 27.60    Compiling walkdir v2.5.0
+2026-May-27 00:13:18.800940 #14 27.72    Compiling idna_adapter v1.2.1
+2026-May-27 00:13:18.800940 #14 27.79    Compiling cssparser-macros v0.6.1
+2026-May-27 00:13:18.800940 #14 27.99    Compiling derive_more-impl v2.1.1
+2026-May-27 00:13:18.800940 #14 28.16    Compiling selectors v0.36.1
+2026-May-27 00:13:18.800940 #14 28.33    Compiling portable-atomic v1.13.1
+2026-May-27 00:13:18.800940 #14 28.45    Compiling utf8_iter v1.0.4
+2026-May-27 00:13:18.800940 #14 28.54    Compiling memchr v2.8.0
+2026-May-27 00:13:18.800940 #14 28.71    Compiling rustversion v1.0.22
+2026-May-27 00:13:18.800940 #14 28.84    Compiling foldhash v0.1.5
+2026-May-27 00:13:18.800940 #14 28.96    Compiling hashbrown v0.15.5
+2026-May-27 00:13:18.800940 #14 29.40    Compiling derive_more v2.1.1
+2026-May-27 00:13:18.800940 #14 29.49    Compiling idna v1.1.0
+2026-May-27 00:13:18.800940 #14 30.53    Compiling tokio-rustls v0.26.4
+2026-May-27 00:13:18.800940 #14 30.70    Compiling cssparser v0.36.0
+2026-May-27 00:13:18.800940 #14 31.13    Compiling markup5ever v0.39.0
+2026-May-27 00:13:18.800940 #14 31.20    Compiling rust-embed-utils v8.11.0
+2026-May-27 00:13:18.800940 #14 31.36    Compiling event-listener-strategy v0.5.4
+2026-May-27 00:13:18.800940 #14 31.60    Compiling axum-core v0.5.6
+2026-May-27 00:13:18.800940 #14 32.62    Compiling sha1 v0.10.6
+2026-May-27 00:13:18.800940 #14 32.84    Compiling webpki-roots v1.0.6
+2026-May-27 00:13:18.800940 #14 32.90    Compiling serde_path_to_error v0.1.20
+2026-May-27 00:13:18.800940 #14 33.12    Compiling headers-core v0.3.0
+2026-May-27 00:13:18.800940 #14 33.18    Compiling servo_arc v0.4.3
+2026-May-27 00:13:18.800940 #14 33.19    Compiling rustc-hash v2.1.1
+2026-May-27 00:13:18.800940 #14 33.24    Compiling matchit v0.8.4
+2026-May-27 00:13:18.800940 #14 33.26    Compiling iri-string v0.7.10
+2026-May-27 00:13:18.800940 #14 33.81    Compiling http-range-header v0.4.2
+2026-May-27 00:13:18.800940 #14 34.09    Compiling axum v0.8.9
+2026-May-27 00:13:18.800940 #14 35.49    Compiling tower-http v0.6.8
+2026-May-27 00:13:18.800940 #14 38.20    Compiling headers v0.4.1
+2026-May-27 00:13:18.800940 #14 38.29    Compiling hyper-rustls v0.27.7
+2026-May-27 00:13:18.800940 #14 39.00    Compiling uuid v1.21.0
+2026-May-27 00:13:18.800940 #14 39.49    Compiling async-lock v3.4.2
+2026-May-27 00:13:18.800940 #14 39.92    Compiling rust-embed-impl v8.11.0
+2026-May-27 00:13:18.800940 #14 40.00    Compiling html5ever v0.39.0
+2026-May-27 00:13:18.800940 #14 40.42    Compiling url v2.5.8
+2026-May-27 00:13:18.800940 #14 41.69    Compiling hashlink v0.10.0
+2026-May-27 00:13:18.800940 #14 42.23    Compiling crossbeam-channel v0.5.15
+2026-May-27 00:13:18.800940 #14 42.24    Compiling crossbeam-epoch v0.9.18
+2026-May-27 00:13:18.800940 #14 42.31    Compiling encoding_rs v0.8.35
+2026-May-27 00:13:18.800940 #14 42.61    Compiling fallible-iterator v0.3.0
+2026-May-27 00:13:18.800940 #14 42.78    Compiling ego-tree v0.11.0
+2026-May-27 00:13:18.800940 #14 42.84    Compiling tagptr v0.2.0
+2026-May-27 00:13:18.800940 #14 42.91    Compiling utf8-width v0.1.8
+2026-May-27 00:13:18.800940 #14 42.95    Compiling fallible-streaming-iterator v0.1.9
+2026-May-27 00:13:18.800940 #14 43.00    Compiling scraper v0.26.0
+2026-May-27 00:13:18.800940 #14 43.02    Compiling html-escape v0.2.13
+2026-May-27 00:13:18.800940 #14 43.04 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:13:18.800940 #14 43.04    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/element_ref/mod.rs:168:16
+2026-May-27 00:13:18.800940 #14 43.04     |
+2026-May-27 00:13:18.800940 #14 43.04 168 |             if let Edge::Open(node) = edge
+2026-May-27 00:13:18.800940 #14 43.05     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 #14 43.05
+2026-May-27 00:13:18.800940 #14 43.05 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:13:18.800940 #14 43.05    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/element_ref/mod.rs:169:20
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05 169 |                 && let Some(element) = ElementRef::wrap(node)
+2026-May-27 00:13:18.800940 #14 43.05     |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 #14 43.05
+2026-May-27 00:13:18.800940 #14 43.05 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:13:18.800940 #14 43.05    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/element_ref/mod.rs:196:16
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05 196 |             if let Edge::Open(node) = edge
+2026-May-27 00:13:18.800940 #14 43.05     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 #14 43.05
+2026-May-27 00:13:18.800940 #14 43.05 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:13:18.800940 #14 43.05    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/element_ref/mod.rs:197:20
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05 197 |                 && let Node::Text(text) = node.value()
+2026-May-27 00:13:18.800940 #14 43.05     |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 #14 43.05
+2026-May-27 00:13:18.800940 #14 43.05 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:13:18.800940 #14 43.05    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/html/mod.rs:162:16
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05 162 |             if let Some(element) = ElementRef::wrap(node)
+2026-May-27 00:13:18.800940 #14 43.05     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 #14 43.05
+2026-May-27 00:13:18.800940 #14 43.05 error[E0658]: `let` expressions in this position are unstable
+2026-May-27 00:13:18.800940 #14 43.05    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/html/mod.rs:184:16
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05 184 |             if let Some(element) = ElementRef::wrap(node)
+2026-May-27 00:13:18.800940 #14 43.05     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 #14 43.05     |
+2026-May-27 00:13:18.800940 #14 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 #14 43.05
+2026-May-27 00:13:18.800940 #14 43.14 For more information about this error, try `rustc --explain E0658`.
+2026-May-27 00:13:18.800940 #14 43.15 error: could not compile `scraper` (lib) due to 6 previous errors
+2026-May-27 00:13:18.800940 #14 43.15 warning: build failed, waiting for other jobs to finish...
+2026-May-27 00:13:18.800940 #14 ERROR: process "/bin/sh -c cargo build --release" did not complete successfully: exit code: 101
+2026-May-27 00:13:18.800940 ------
+2026-May-27 00:13:18.800940 > [builder 7/7] RUN cargo build --release:
+2026-May-27 00:13:18.800940 43.05    --> /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scraper-0.26.0/src/html/mod.rs:184:16
+2026-May-27 00:13:18.800940 43.05     |
+2026-May-27 00:13:18.800940 43.05 184 |             if let Some(element) = ElementRef::wrap(node)
+2026-May-27 00:13:18.800940 43.05     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-May-27 00:13:18.800940 43.05     |
+2026-May-27 00:13:18.800940 43.05     = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+2026-May-27 00:13:18.800940 43.05
+2026-May-27 00:13:18.800940 43.14 For more information about this error, try `rustc --explain E0658`.
+2026-May-27 00:13:18.800940 43.15 error: could not compile `scraper` (lib) due to 6 previous errors
+2026-May-27 00:13:18.800940 43.15 warning: build failed, waiting for other jobs to finish...
+2026-May-27 00:13:18.800940 ------
+2026-May-27 00:13:18.800940 
+2026-May-27 00:13:18.800940 2 warnings found (use docker --debug to expand):
+2026-May-27 00:13:18.800940 - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "RAPLA_WEB_PASSWORD") (line 34)
+2026-May-27 00:13:18.800940 - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "RAPLA_WEB_PASSWORD") (line 8)
+2026-May-27 00:13:18.800940 Dockerfile:25
+2026-May-27 00:13:18.800940 --------------------
+2026-May-27 00:13:18.800940 23 |
+2026-May-27 00:13:18.800940 24 |     RUN cd web && bun install && bun run build
+2026-May-27 00:13:18.800940 25 | >>> RUN cargo build --release
+2026-May-27 00:13:18.800940 26 |
+2026-May-27 00:13:18.800940 27 |     FROM debian:bookworm-slim AS runtime
+2026-May-27 00:13:18.800940 --------------------
+2026-May-27 00:13:18.800940 ERROR: failed to build: failed to solve: process "/bin/sh -c cargo build --release" did not complete successfully: exit code: 101
+2026-May-27 00:13:18.800940 exit status 1
+2026-May-27 00:13:18.807058 [DEBUG] Error type: App\Exceptions\DeploymentException
+2026-May-27 00:13:18.813471 [DEBUG] Error code: 0
+2026-May-27 00:13:18.819655 [DEBUG] Location: /var/www/html/app/Traits/ExecuteRemoteCommand.php:242
+2026-May-27 00:13:18.825707 [DEBUG] Stack trace (first 5 lines):
+2026-May-27 00:13:18.831921 [DEBUG] #0 /var/www/html/app/Traits/ExecuteRemoteCommand.php(106): App\Jobs\ApplicationDeploymentJob->executeCommandWithProcess()
+2026-May-27 00:13:18.838125 [DEBUG] #1 /var/www/html/vendor/laravel/framework/src/Illuminate/Collections/Traits/EnumeratesValues.php(275): App\Jobs\ApplicationDeploymentJob->{closure:App\Traits\ExecuteRemoteCommand::execute_remote_command():72}()
+2026-May-27 00:13:18.844121 [DEBUG] #2 /var/www/html/app/Traits/ExecuteRemoteCommand.php(72): Illuminate\Support\Collection->each()
+2026-May-27 00:13:18.850217 [DEBUG] #3 /var/www/html/app/Jobs/ApplicationDeploymentJob.php(3290): App\Jobs\ApplicationDeploymentJob->execute_remote_command()
+2026-May-27 00:13:18.856418 [DEBUG] #4 /var/www/html/app/Jobs/ApplicationDeploymentJob.php(898): App\Jobs\ApplicationDeploymentJob->build_image()
+2026-May-27 00:13:18.862469 ========================================
+2026-May-27 00:13:18.868725 Deployment failed. Removing the new version of your application.
+2026-May-27 00:13:19.197717 Gracefully shutting down build container: fnrwwgm1ousicaqapwyal72u
+2026-May-27 00:13:19.389357 [DEBUG] [CMD]: docker stop -t 30 fnrwwgm1ousicaqapwyal72u
+2026-May-27 00:13:19.389357 [DEBUG] fnrwwgm1ousicaqapwyal72u

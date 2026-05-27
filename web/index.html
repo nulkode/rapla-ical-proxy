@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapla Calendar Manager</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="sidebar">
+        <h1>Rapla Manager</h1>
+        <div id="calendar-list">
+          <button id="add-calendar-btn">+ Add Calendar</button>
+          <ul id="calendars"></ul>
+        </div>
+      </div>
+      <div id="main">
+        <div id="calendar"></div>
+      </div>
+    </div>
+
+    <div id="modal-overlay" class="hidden">
+      <div id="modal">
+        <h2 id="modal-title"></h2>
+        <form id="modal-form">
+          <div id="modal-fields"></div>
+          <div id="modal-actions">
+            <button type="button" id="modal-cancel">Cancel</button>
+            <button type="submit" id="modal-submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,9 +1,13 @@
+mod api;
 mod cache;
 mod calendar;
+mod db;
 mod logging;
+mod overlay;
 mod parser;
 mod proxy;
 mod resolver;
+mod web;
 
 use std::env::{self, VarError};
 use std::fmt::Display;
@@ -16,7 +20,6 @@ use tokio::time::Duration;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    // Single-shot debug mode for parser development.
     #[cfg(debug_assertions)]
     if let Some(uri) = getenv("RAPLA_DEBUG") {
         use crate::proxy::{build_client, handle};
@@ -42,12 +45,43 @@ async fn main() -> std::io::Result<()> {
     let cache_ttl = Duration::from_secs(getenv("RAPLA_CACHE_TTL").unwrap_or(3600));
     let cache_capacity = getenv("RAPLA_CACHE_MAX_SIZE").unwrap_or(0);
 
-    // Middlewares are layered, i.e. the later it is applied the earlier it is called.
+    let db_path = getenv::<String>("RAPLA_DB_PATH").unwrap_or_else(|| "rapla.db".into());
+    let db = db::Db::open(&db_path).expect("failed to open database");
+
+    let tag = getenv::<String>("RAPLA_TAG");
+
+    let server_url = getenv::<String>("RAPLA_SERVER_URL").unwrap_or_else(|| {
+        format!("http://{}", address)
+    });
+
+    let (web_username, web_password) = match (
+        getenv::<String>("RAPLA_WEB_USERNAME"),
+        getenv::<String>("RAPLA_WEB_PASSWORD"),
+    ) {
+        (Some(u), Some(p)) => (u, p),
+        _ => {
+            eprintln!("RAPLA_WEB_USERNAME and RAPLA_WEB_PASSWORD must be set to enable the web interface");
+            return Ok(());
+        }
+    };
+
+    let client = proxy::build_client();
+    let api_state = api::ApiState {
+        db,
+        client,
+        tag,
+        server_url,
+    };
+
     let router = Router::new();
     let router = crate::proxy::apply_routes(router);
     let router = crate::cache::apply_middleware(router, (cache_ttl, cache_capacity));
     let router = crate::resolver::apply_middleware(router);
     let router = crate::logging::apply_middleware(router);
+
+    let router = crate::api::apply_api_routes(router, api_state, &web_username, &web_password);
+
+    let router = crate::web::apply_web_routes(router);
 
     let listener = TcpListener::bind(address).await?;
     axum::serve(listener, router)

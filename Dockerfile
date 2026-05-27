@@ -1,13 +1,27 @@
-FROM gcr.io/distroless/static:nonroot@sha256:e3f945647ffb95b5839c07038d64f9811adf17308b9121d8a2b87b6a22a80a39 AS runtime
+FROM rust:slim AS builder
 
-# Used for CI builds that cross-compile outside of the container build.
-# Assumes a directory layout of bin/rapla-ical-proxy-{arm64,amd64,...}.
-ARG TARGETARCH
-COPY rapla-ical-proxy.${TARGETARCH} /usr/local/bin/rapla-ical-proxy
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl unzip pkg-config libssl-dev ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:$PATH"
+
+WORKDIR /app
+COPY . .
+
+RUN cd web && bun install && bun run build
+RUN cargo build --release
+
+FROM debian:bookworm-slim AS runtime
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/target/release/rapla-ical-proxy /usr/local/bin/rapla-ical-proxy
 
 ENV RAPLA_ADDRESS=0.0.0.0:8080
 EXPOSE 8080
-
-USER 65532:65532
 
 ENTRYPOINT [ "rapla-ical-proxy" ]
