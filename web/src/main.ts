@@ -102,7 +102,12 @@ async function loadCalendarEvents() {
   if (!selectedCalendar || !calendar) return;
 
   const icsUrl = buildIcsUrl(selectedCalendar);
-  const res = await fetch(icsUrl);
+  
+  const [res, deltas] = await Promise.all([
+    fetch(icsUrl),
+    api<Delta[]>(`/calendars/${selectedCalendar.id}/deltas`)
+  ]);
+
   if (!res.ok) {
     calendar.removeAllEvents();
     return;
@@ -117,6 +122,30 @@ async function loadCalendarEvents() {
   const fcEvents = events.map((vevent) => {
     const event = new Ical.Event(vevent);
     const isOverlay = event.summary.startsWith('[CM]') || event.summary.includes('[CM]');
+    
+    let matchKey = buildMatchKeyFromEvent(event);
+    let deltaId: string | null = null;
+
+    if (isOverlay) {
+      const cleanTitle = event.summary.replace(/\[.*?\]\s*/, '');
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      const startTime = `${pad(event.startDate.toJSDate().getHours())}:${pad(event.startDate.toJSDate().getMinutes())}`;
+      
+      const delta = deltas.find(d => 
+        (d.type === 'modify' || d.type === 'add') && 
+        d.event && 
+        d.event.title === cleanTitle && 
+        d.event.start === startTime
+      );
+
+      if (delta) {
+        deltaId = delta.id;
+        if (delta.match_key) {
+          matchKey = delta.match_key; 
+        }
+      }
+    }
+
     return {
       id: event.uid,
       title: event.summary,
@@ -124,7 +153,8 @@ async function loadCalendarEvents() {
       end: event.endDate.toJSDate(),
       extendedProps: {
         isOverlay,
-        matchKey: buildMatchKeyFromEvent(event),
+        matchKey,
+        deltaId,
         rawEvent: event,
       },
       classNames: isOverlay ? ['overlay-event'] : ['live-event'],
@@ -144,17 +174,21 @@ function buildMatchKeyFromEvent(event: Ical.Event): string {
   return `${date}|${startTime}-${endTime}|${event.summary}`;
 }
 
-function buildMatchKeyFromDate(date: Date, startTime: string, endTime: string, title: string): string {
-  const pad = (n: number) => n.toString().padStart(2, '0');
-  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  return `${dateStr}|${startTime}-${endTime}|${title}`;
-}
+// === BUG FIX: Global variables to prevent event listener memory leaks ===
+let currentFormHandler: ((e: Event) => void) | null = null;
+let currentCancelHandler: (() => void) | null = null;
 
 function showModal(title: string, fields: { label: string; name: string; type: string; value?: string }[], onSubmit: (data: Record<string, string>) => void) {
   const overlay = document.getElementById('modal-overlay')!;
   const titleEl = document.getElementById('modal-title')!;
   const fieldsEl = document.getElementById('modal-fields')!;
   const actionsEl = document.getElementById('modal-actions')!;
+  const form = document.getElementById('modal-form') as HTMLFormElement;
+  const cancelBtn = document.getElementById('modal-cancel')!;
+
+  // Clean up any stale listeners to prevent duplicate submissions
+  if (currentFormHandler) form.removeEventListener('submit', currentFormHandler);
+  if (currentCancelHandler) cancelBtn.removeEventListener('click', currentCancelHandler);
 
   titleEl.textContent = title;
   fieldsEl.innerHTML = '';
@@ -166,11 +200,7 @@ function showModal(title: string, fields: { label: string; name: string; type: s
     fieldsEl.appendChild(label);
   }
 
-  const form = document.getElementById('modal-form') as HTMLFormElement;
-  const submitBtn = document.getElementById('modal-submit')!;
-  const cancelBtn = document.getElementById('modal-cancel')!;
-
-  const handler = (e: Event) => {
+  currentFormHandler = (e: Event) => {
     e.preventDefault();
     const formData = new FormData(form);
     const data: Record<string, string> = {};
@@ -179,27 +209,31 @@ function showModal(title: string, fields: { label: string; name: string; type: s
     }
     onSubmit(data);
     overlay.classList.add('hidden');
-    form.removeEventListener('submit', handler);
-    submitBtn.removeEventListener('click', handler as any);
-    cancelBtn.removeEventListener('click', cancelHandler);
+    
+    // Clean up successfully executed handlers
+    form.removeEventListener('submit', currentFormHandler!);
+    cancelBtn.removeEventListener('click', currentCancelHandler!);
+    currentFormHandler = null;
+    currentCancelHandler = null;
   };
 
-  const cancelHandler = () => {
+  currentCancelHandler = () => {
     overlay.classList.add('hidden');
-    form.removeEventListener('submit', handler);
-    submitBtn.removeEventListener('click', handler as any);
-    cancelBtn.removeEventListener('click', cancelHandler);
+    form.removeEventListener('submit', currentFormHandler!);
+    cancelBtn.removeEventListener('click', currentCancelHandler!);
+    currentFormHandler = null;
+    currentCancelHandler = null;
   };
 
-  form.addEventListener('submit', handler);
-  cancelBtn.addEventListener('click', cancelHandler);
+  form.addEventListener('submit', currentFormHandler);
+  cancelBtn.addEventListener('click', currentCancelHandler);
   overlay.classList.remove('hidden');
 }
 
 async function handleEventClick(info: any) {
   if (!selectedCalendar) return;
 
-  const { isOverlay, matchKey, rawEvent } = info.event.extendedProps;
+  const { matchKey, deltaId, rawEvent } = info.event.extendedProps;
   const event = rawEvent as Ical.Event;
 
   const pad = (n: number) => n.toString().padStart(2, '0');
@@ -208,11 +242,13 @@ async function handleEventClick(info: any) {
 
   const startDate = event.startDate.toJSDate();
   const endDate = event.endDate.toJSDate();
+  
+  const cleanTitle = event.summary.replace(/\[.*?\]\s*/, '');
 
   showModal(
     event.summary,
     [
-      { label: 'Title', name: 'title', type: 'text', value: event.summary },
+      { label: 'Title', name: 'title', type: 'text', value: cleanTitle },
       { label: 'Date', name: 'date', type: 'date', value: fmtDate(startDate) },
       { label: 'Start', name: 'start', type: 'time', value: fmtTime(startDate) },
       { label: 'End', name: 'end', type: 'time', value: fmtTime(endDate) },
@@ -229,17 +265,24 @@ async function handleEventClick(info: any) {
         organizer: data.organizer || undefined,
       };
 
-      await api<Delta>(`/calendars/${selectedCalendar!.id}/deltas`, 'POST', {
-        type: 'modify',
-        match_key: matchKey,
-        event: newEvent,
-      });
+      if (deltaId) {
+        await api<Delta>(`/calendars/${selectedCalendar!.id}/deltas/${deltaId}`, 'PUT', {
+          type: matchKey ? 'modify' : 'add', 
+          match_key: matchKey,
+          event: newEvent,
+        });
+      } else {
+        await api<Delta>(`/calendars/${selectedCalendar!.id}/deltas`, 'POST', {
+          type: 'modify',
+          match_key: matchKey,
+          event: newEvent,
+        });
+      }
 
       await loadCalendarEvents();
     }
   );
 
-  // Add delete button dynamically
   const actions = document.getElementById('modal-actions')!;
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
@@ -247,11 +290,24 @@ async function handleEventClick(info: any) {
   deleteBtn.style.background = '#e94560';
   deleteBtn.style.color = '#fff';
   deleteBtn.style.marginRight = 'auto';
+  
   deleteBtn.addEventListener('click', async () => {
-    await api<Delta>(`/calendars/${selectedCalendar!.id}/deltas`, 'POST', {
-      type: 'delete',
-      match_key: matchKey,
-    });
+    if (deltaId) {
+      if (matchKey) {
+        await api<Delta>(`/calendars/${selectedCalendar!.id}/deltas/${deltaId}`, 'PUT', {
+          type: 'delete',
+          match_key: matchKey,
+        });
+      } else {
+        await api(`/calendars/${selectedCalendar!.id}/deltas/${deltaId}`, 'DELETE');
+      }
+    } else {
+      await api<Delta>(`/calendars/${selectedCalendar!.id}/deltas`, 'POST', {
+        type: 'delete',
+        match_key: matchKey,
+      });
+    }
+    
     document.getElementById('modal-overlay')!.classList.add('hidden');
     await loadCalendarEvents();
   });

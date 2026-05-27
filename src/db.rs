@@ -166,4 +166,39 @@ impl Db {
             params![id.to_string()],
         )
     }
+
+    pub fn update_delta(
+        &self,
+        id: Uuid,
+        calendar_id: i64,
+        r#type: DeltaType,
+        match_key: Option<String>,
+        event_json: Option<String>,
+    ) -> rusqlite::Result<OverlayDelta> {
+        let conn = self.conn.lock().unwrap();
+        let type_str = match r#type {
+            DeltaType::Delete => "delete",
+            DeltaType::Modify => "modify",
+            DeltaType::Add => "add",
+        };
+
+        conn.execute(
+            "UPDATE overlay_deltas SET type = ?1, match_key = ?2, event_json = ?3 WHERE id = ?4 AND calendar_id = ?5",
+            params![
+                type_str,
+                match_key,
+                event_json,
+                id.to_string(),
+                calendar_id
+            ],
+        )?;
+
+        Ok(OverlayDelta {
+            id,
+            calendar_id,
+            r#type,
+            match_key,
+            event_json,
+        })
+    }
 }

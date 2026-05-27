@@ -3,7 +3,7 @@ use axum::extract::{Path, Request, State};
 use axum::http::{StatusCode, header};
 use axum::middleware::{self, Next};
 use axum::response::{IntoResponse, Response};
-use axum::routing::{delete, get, post};
+use axum::routing::{delete, get, post, put};
 use base64::Engine;
 use serde::{Deserialize, Serialize};
 
@@ -89,6 +89,7 @@ pub fn apply_api_routes(router: Router, state: ApiState, username: &str, passwor
         .route("/calendars/{id}/deltas", get(list_deltas))
         .route("/calendars/{id}/deltas", post(create_delta))
         .route("/calendars/{id}/deltas/{delta_id}", delete(delete_delta))
+        .route("/calendars/{id}/deltas/{delta_id}", put(update_delta))
         .with_state(state)
         .layer(auth);
 
@@ -182,6 +183,31 @@ async fn delete_delta(
         .delete_delta(delta_id)
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     Ok(StatusCode::NO_CONTENT)
+}
+
+async fn update_delta(
+    State(state): State<ApiState>,
+    Path((id, delta_id)): Path<(i64, uuid::Uuid)>,
+    axum::Json(req): axum::Json<CreateDeltaRequest>,
+) -> Result<impl IntoResponse, (StatusCode, String)> {
+    let delta_type = match req.r#type.as_str() {
+        "delete" => DeltaType::Delete,
+        "modify" => DeltaType::Modify,
+        "add" => DeltaType::Add,
+        _ => return Err((StatusCode::BAD_REQUEST, "invalid type".into())),
+    };
+
+    let event_json = req
+        .event
+        .as_ref()
+        .map(|e| serde_json::to_string(e).unwrap());
+
+    let delta = state
+        .db
+        .update_delta(delta_id, id, delta_type, req.match_key, event_json)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    Ok((StatusCode::OK, axum::Json(DeltaResponse::from(&delta))))
 }
 
 async fn get_forked_ics(
